@@ -1,0 +1,37 @@
+{
+    "id": "1.8",
+    "title": "Ensure IAM password policy requires minimum length of 14 or greater",
+    "profile": "Level 1",
+    "description": "Password policies are, in part, used to enforce password complexity requirements. IAM password policies can be used to ensure password are at least a given length. It is recommended that the password policy require a minimum password length 14.",
+    "rationale": "Setting a password complexity policy increases account resiliency against brute force login attempts.",
+    "remediation_type": "Automated",
+    "audit": "Perform the following to ensure the password policy is configured as prescribed:\nFrom Console:\n1. Login to AWS Console (with appropriate permissions to View Identity Access Management Account Settings)\n2. Go to IAM Service on the AWS Console\n3. Click on Account Settings on the Left Pane\n4. Ensure \"Minimum password length\" is set to 14 or greater.\nFrom Command Line:\naws iam get-account-password-policy\nEnsure the output of the above command includes \"MinimumPasswordLength\": 14 (or higher)",
+    "remediation": "Perform the following to set the password policy as prescribed:\nFrom Console:\n1. Login to AWS Console (with appropriate permissions to View Identity Access Management Account Settings)\n2. Go to IAM Service on the AWS Console\n3. Click on Account Settings on the Left Pane\n4. Set \"Minimum password length\" to 14 or greater.\n5. Click \"Apply password policy\"\nFrom Command Line:\naws iam update-account-password-policy --minimum-password-length 14\nNote: All commands starting with \"aws iam update-account-password-policy\" can be combined into a single command.",
+    "impact": "",
+    "default_value": "",
+    "references": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_passwords_account-policy.html",
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#configure-strong-password-policy"
+    ],
+    "cis_controls_v8": [
+      {
+        "id": "5.2",
+        "name": "Use Unique Passwords",
+        "description": "Use unique passwords for all enterprise assets. Best practice implementation includes, at a minimum, an 8-character password for accounts using MFA and a 14-character password for accounts not using MFA.",
+        "asset_type": "Users",
+        "security_function": "Protect",
+        "implementation_groups": [
+          1,
+          2,
+          3
+        ],
+        "applicability_of_service_model": {
+          "IaaS": true,
+          "PaaS": true,
+          "SaaS": true,
+          "FaaS": true
+        }
+      }
+    ],
+    "additional_information": ""
+  }

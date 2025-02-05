@@ -1,0 +1,39 @@
+{
+    "id": "1.20",
+    "title": "Ensure that IAM Access analyzer is enabled for all regions",
+    "profile": "Level 1",
+    "description": "Enable IAM Access analyzer for IAM policies about all resources in each active AWS region.",
+    "rationale": "AWS IAM Access Analyzer helps you identify the resources in your organization and accounts, such as Amazon S3 buckets or IAM roles, that are shared with an external entity. This lets you identify unintended access to your resources and data. Access Analyzer identifies resources that are shared with external principals by using logic-based reasoning to analyze the resource-based policies in your AWS environment. IAM Access Analyzer continuously monitors all policies for S3 bucket, IAM roles, KMS (Key Management Service) keys, AWS Lambda functions, and Amazon SQS(Simple Queue Service) queues.",
+    "remediation_type": "Automated",
+    "audit_procedure": "From Console:\n1. Open the IAM console at https://console.aws.amazon.com/iam/\n2. Choose Access analyzer\n3. Click 'Analyzers'\n4. Ensure that at least one analyzer is present\n5. Ensure that the STATUS is set to Active\n6. Repeat these step for each active region\n\nFrom Command Line:\n1. Run the following command:\naws accessanalyzer list-analyzers | grep status\n2. Ensure that at least one Analyzer the status is set to ACTIVE\n3. Repeat the steps above for each active region.",
+    "remediation_procedure": "From Console:\nPerform the following to enable IAM Access analyzer for IAM policies:\n1. Open the IAM console at https://console.aws.amazon.com/iam/.\n2. Choose Access analyzer.\n3. Choose Create analyzer.\n4. On the Create analyzer page, confirm that the Region displayed is the Region where you want to enable Access Analyzer.\n5. Enter a name for the analyzer. Optional as it will generate a name for you automatically.\n6. Add any tags that you want to apply to the analyzer. Optional.\n7. Choose Create Analyzer.\n8. Repeat these step for each active region\n\nFrom Command Line:\nRun the following command:\naws accessanalyzer create-analyzer --analyzer-name <NAME> --type <ACCOUNT|ORGANIZATION>\nRepeat this command above for each active region.",
+    "impact": "",
+    "default_value": "",
+    "references": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html",
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-getting-started.html",
+      "https://docs.aws.amazon.com/cli/latest/reference/accessanalyzer/get-analyzer.html",
+      "https://docs.aws.amazon.com/cli/latest/reference/accessanalyzer/create-analyzer.html"
+    ],
+    "cis_controls_v8": [
+      {
+        "id": "3.3",
+        "name": "Configure Data Access Control Lists",
+        "description": "Configure data access control lists based on a user's need to know. Apply data access control lists, also known as access permissions, to local and remote file systems, databases, and applications.",
+        "asset_type": "Data",
+        "security_function": "Protect",
+        "implementation_groups": [
+          1,
+          2,
+          3
+        ],
+        "applicability_of_service_model": {
+          "IaaS": true,
+          "PaaS": true,
+          "SaaS": true,
+          "FaaS": true
+        }
+      }
+    ],
+    "additional_information": "Some regions in AWS are enabled by default and some are disabled by default. Regions introduced prior to March 20, 2019 are enabled by default and cannot be disabled. Regions introduced after can be disabled by default. For more information on managing AWS Regions, please see AWS's documentation on managing AWS Regions."
+  }

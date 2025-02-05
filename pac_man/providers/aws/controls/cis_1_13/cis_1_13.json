@@ -1,0 +1,37 @@
+{
+    "id": "1.13",
+    "title": "Ensure there is only one active access key available for any single IAM user",
+    "profile": "Level 1",
+    "description": "Access keys are long-term credentials for an IAM user or the AWS account 'root' user. You can use access keys to sign programmatic requests to the AWS CLI or AWS API (directly or using the AWS SDK)",
+    "rationale": "Access keys are long-term credentials for an IAM user or the AWS account 'root' user. You can use access keys to sign programmatic requests to the AWS CLI or AWS API. One of the best ways to protect your account is to not allow users to have multiple access keys.",
+    "remediation_type": "Automated",
+    "audit": "From Console:\n\n1. Sign in to the AWS Management Console and navigate to IAM dashboard at https://console.aws.amazon.com/iam/.\n2. In the left navigation panel, choose Users.\n3. Click on the IAM user name that you want to examine.\n4. On the IAM user configuration page, select Security Credentials tab.\n5. Under Access Keys section, in the Status column, check the current status for each access key associated with the IAM user. If the selected IAM user has more than one access key activated then the users access configuration does not adhere to security best practices and the risk of accidental exposures increases.\n• Repeat steps no. 3 – 5 for each IAM user in your AWS account.\n\nFrom Command Line:\n\n1. Run list-users command to list all IAM users within your account:\n\naws iam list-users --query \"Users[*].UserName\"\n\nThe command output should return an array that contains all your IAM user names.\n\n2. Run list-access-keys command using the IAM user name list to return the current status of each access key associated with the selected IAM user:\n\naws iam list-access-keys --user-name <user-name>\n\nThe command output should expose the metadata (\"Username\", \"AccessKeyId\", \"Status\", \"CreateDate\") for each access key on that user account.\n\n3. Check the Status property value for each key returned to determine each keys current state. If the Status property value for more than one IAM access key is set to Active, the user access configuration does not adhere to this recommendation, refer to the remediation below.\n• Repeat steps no. 2 and 3 for each IAM user in your AWS account.",
+    "remediation": "From Console:\n\n1. Sign in to the AWS Management Console and navigate to IAM dashboard at https://console.aws.amazon.com/iam/.\n2. In the left navigation panel, choose Users.\n3. Click on the IAM user name that you want to examine.\n4. On the IAM user configuration page, select Security Credentials tab.\n5. In Access Keys section, choose one access key that is less than 90 days old. This should be the only active key used by this IAM user to access AWS resources programmatically. Test your application(s) to make sure that the chosen access key is working.\n6. In the same Access Keys section, identify your non-operational access keys (other than the chosen one) and deactivate it by clicking the Make Inactive link.\n7. If you receive the Change Key Status confirmation box, click Deactivate to switch off the selected key.\n8. Repeat steps no. 3 – 7 for each IAM user in your AWS account.\n\nFrom Command Line:\n\n1. Using the IAM user and access key information provided in the Audit CLI, choose one access key that is less than 90 days old. This should be the only active key used by this IAM user to access AWS resources programmatically. Test your application(s) to make sure that the chosen access key is working.\n2. Run the update-access-key command below using the IAM user name and the non-operational access key IDs to deactivate the unnecessary key(s). Refer to the Audit section to identify the unnecessary access key ID for the selected IAM user\n\nNote - the command does not return any output:\n\naws iam update-access-key --access-key-id <access-key-id> --status Inactive --user-name <user-name>\n\n3. To confirm that the selected access key pair has been successfully deactivated run the list-access-keys audit command again for that IAM User:\n\naws iam list-access-keys --user-name <user-name>\n\n• The command output should expose the metadata for each access key associated with the IAM user. If the non-operational key pair(s) Status is set to Inactive, the key has been successfully deactivated and the IAM user access configuration adheres now to this recommendation.\n\n4. Repeat steps no. 1 – 3 for each IAM user in your AWS account.",
+    "impact": "",
+    "default_value": "",
+    "references": [
+      "https://docs.aws.amazon.com/general/latest/gr/aws-access-keys-best-practices.html",
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html"
+    ],
+    "cis_controls_v8": [
+      {
+        "id": "5.2",
+        "name": "Use Unique Passwords",
+        "description": "Use unique passwords for all enterprise assets. Best practice implementation includes, at a minimum, an 8-character password for accounts using MFA and a 14-character password for accounts not using MFA.",
+        "asset_type": "Users",
+        "security_function": "Protect",
+        "implementation_groups": [
+          1,
+          2,
+          3
+        ],
+        "applicability_of_service_model": {
+          "IaaS": true,
+          "PaaS": true,
+          "SaaS": true,
+          "FaaS": true
+        }
+      }
+    ],
+    "additional_information": ""
+  }

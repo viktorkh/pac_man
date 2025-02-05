@@ -1,0 +1,39 @@
+{
+    "id": "1.16",
+    "title": "Ensure IAM policies that allow full \"*:*\" administrative privileges are not attached",
+    "profile": "Level 1",
+    "description": "IAM policies are the means by which privileges are granted to users, groups, or roles. It is recommended and considered a standard security advice to grant least privilege -that is, granting only the permissions required to perform a task. Determine what users need to do and then craft policies for them that let the users perform only those tasks, instead of allowing full administrative privileges.",
+    "rationale": "It's more secure to start with a minimum set of permissions and grant additional permissions as necessary, rather than starting with permissions that are too lenient and then trying to tighten them later.\n\nProviding full administrative privileges instead of restricting to the minimum set of permissions that the user is required to do exposes the resources to potentially unwanted actions.\n\nIAM policies that have a statement with \"Effect\": \"Allow\" with \"Action\": \"*\" over \"Resource\": \"*\" should be removed.",
+    "remediation_type": "Automated",
+    "audit_procedure": "Perform the following to determine what policies are created:\n\nFrom Command Line:\n\n1. Run the following to get a list of IAM policies:\n\naws iam list-policies --only-attached --output text\n\n2. For each policy returned, run the following command to determine if any policies is allowing full administrative privileges on the account:\n\naws iam get-policy-version --policy-arn <policy_arn> --version-id <version>\n\n3. In output ensure policy should not have any Statement block with \"Effect\": \"Allow\" and Action set to \"*\" and Resource set to \"*\"",
+    "remediation_procedure": "From Console:\n\nPerform the following to detach the policy that has full administrative privileges:\n\n1. Sign in to the AWS Management Console and open the IAM console at https://console.aws.amazon.com/iam/.\n2. In the navigation pane, click Policies and then search for the policy name found in the audit step.\n3. Select the policy that needs to be deleted.\n4. In the policy action menu, select first Detach\n5. Select all Users, Groups, Roles that have this policy attached\n6. Click Detach Policy\n7. In the policy action menu, select Detach\n8. Select the newly detached policy and select Delete\n\nFrom Command Line:\n\nPerform the following to detach the policy that has full administrative privileges as found in the audit step:\n\n1. Lists all IAM users, groups, and roles that the specified managed policy is attached to.\n\naws iam list-entities-for-policy --policy-arn <policy_arn>\n\n2. Detach the policy from all IAM Users:\n\naws iam detach-user-policy --user-name <iam_user> --policy-arn <policy_arn>\n\n3. Detach the policy from all IAM Groups:\n\naws iam detach-group-policy --group-name <iam_group> --policy-arn <policy_arn>\n\n4. Detach the policy from all IAM Roles:\n\naws iam detach-role-policy --role-name <iam_role> --policy-arn <policy_arn>",
+    "impact": "",
+    "default_value": "",
+    "references": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html",
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html",
+      "CCE-78912-3",
+      "https://docs.aws.amazon.com/cli/latest/reference/iam/index.html#cli-aws-iam"
+    ],
+    "cis_controls_v8": [
+      {
+        "id": "3.3",
+        "name": "Configure Data Access Control Lists",
+        "description": "Configure data access control lists based on a user's need to know. Apply data access control lists, also known as access permissions, to local and remote file systems, databases, and applications.",
+        "asset_type": "Data",
+        "security_function": "Protect",
+        "implementation_groups": [
+          1,
+          2,
+          3
+        ],
+        "applicability_of_service_model": {
+          "IaaS": true,
+          "PaaS": true,
+          "SaaS": true,
+          "FaaS": true
+        }
+      }
+    ],
+    "additional_information": ""
+  }

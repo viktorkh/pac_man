@@ -1,0 +1,54 @@
+{
+  "id": "2.1.3",
+  "title": "Ensure all data in Amazon S3 has been discovered, classified and secured when required",
+  "description": "Amazon S3 buckets can contain sensitive data, that for security purposes should be discovered, monitored, classified and protected. Macie along with other 3rd party tools can automatically provide an inventory of Amazon S3 buckets.",
+  "rationale": "Using a Cloud service or 3rd Party software to continuously monitor and automate the process of data discovery and classification for S3 buckets using machine learning and pattern matching is a strong defense in protecting that information. Amazon Macie is a fully managed data security and data privacy service that uses machine learning and pattern matching to discover and protect your sensitive data in AWS.",
+  "remediation_type": "Manual",
+  "profile_applicability": "Level 2",
+  "audit_procedure": "Perform the following steps to determine if Macie is running:\n\nFrom Console:\n1. Login to the Macie console at https://console.aws.amazon.com/macie/\n2. In the left hand pane click on By job under findings.\n3. Confirm that you have a Job setup for your S3 Buckets\n\nWhen you log into the Macie console if you aren't taken to the summary page and you don't have a job setup and running then refer to the remediation procedure below. If you are using a 3rd Party tool to manage and protect your s3 data you meet this recommendation.",
+  "remediation_procedure": "Perform the steps below to enable and configure Amazon Macie\n\nFrom Console:\n1. Log on to the Macie console at https://console.aws.amazon.com/macie/\n2. Click Get started.\n3. Click Enable Macie.\n\nSetup a repository for sensitive data discovery results\n1. In the Left pane, under Settings, click Discovery results.\n2. Make sure Create bucket is selected.\n3. Create a bucket, enter a name for the bucket. The name must be unique across all S3 buckets. In addition, the name must start with a lowercase letter or a number.\n4. Click on Advanced.\n5. Block all public access, make sure Yes is selected.\n6. KMS encryption, specify the AWS KMS key that you want to use to encrypt the results. The key must be a symmetric, customer master key (CMK) that's in the same Region as the S3 bucket.\n7. Click on Save\n\nCreate a job to discover sensitive data\n1. In the left pane, click S3 buckets. Macie displays a list of all the S3 buckets for your account.\n2. Select the check box for each bucket that you want Macie to analyze as part of the job\n3. Click Create job.\n4. Click Quick create.\n5. For the Name and description step, enter a name and, optionally, a description of the job.\n6. Then click Next.\n7. For the Review and create step, click Submit.\n\nReview your findings\n1. In the left pane, click Findings.\n2. To view the details of a specific finding, choose any field other than the check box for the finding.\n\nIf you are using a 3rd Party tool to manage and protect your s3 data, follow the Vendor documentation for implementing and configuring that tool.",
+  "impact": "There is a cost associated with using Amazon Macie. There is also typically a cost associated with 3rd Party tools that perform similar processes and protection.",
+  "references": [
+    "https://aws.amazon.com/macie/getting-started/",
+    "https://docs.aws.amazon.com/workspaces/latest/adminguide/data-protection.html",
+    "https://docs.aws.amazon.com/macie/latest/user/data-classification.html"
+  ],
+  "cis_controls_v8": [
+    {
+      "control_id": "3.1",
+      "control_name": "Establish and Maintain a Data Management Process",
+      "control_description": "Establish and maintain a data management process. In the process, address data sensitivity, data owner, handling of data, data retention limits, and disposal requirements, based on sensitivity and retention standards for the enterprise. Review and update documentation annually, or when significant enterprise changes occur that could impact this Safeguard.",
+      "asset_type": "Data",
+      "security_function": "Identify",
+      "implementation_groups": [
+        1,
+        2,
+        3
+      ],
+      "applicability_of_service_model": {
+        "IaaS": true,
+        "PaaS": true,
+        "SaaS": true,
+        "FaaS": true
+      }
+    },
+    {
+      "control_id": "3.11",
+      "control_name": "Encrypt Sensitive Data at Rest",
+      "control_description": "Encrypt sensitive data at rest on servers, applications, and databases containing sensitive data. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.",
+      "asset_type": "Data",
+      "security_function": "Protect",
+      "implementation_groups": [
+        2,
+        3
+      ],
+      "applicability_of_service_model": {
+        "IaaS": true,
+        "PaaS": true,
+        "SaaS": true,
+        "FaaS": true
+      }
+    }
+  ],
+  "additional_information": "When implementing data discovery and classification, consider the potential impact on performance and costs. Regularly review and update your classification policies to ensure they remain effective and aligned with your organization's security requirements."
+}

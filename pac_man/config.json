@@ -1,0 +1,6 @@
+{
+    "provider": "aws",
+    "regions" : ["il-central-1"],
+    "checks": ["cis_1_4","cis_1_8","cis_1_9","cis_1_13","cis_1_14","cis_1_20"],
+    "output_format": "json"
+}

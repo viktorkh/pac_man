@@ -1,0 +1,1173 @@
+{
+  "benchmark_name": "CIS Amazon Web Services Foundations Benchmark",
+  "version": "2.0.0",
+  "provider": "AWS",
+  "recommendations": [
+    {
+      "id": "1.1",
+      "title": "Maintain current contact details",
+      "description": "Ensure contact email and telephone details for AWS accounts are current and map to more than one individual in your organization.",
+      "rationale": "If an AWS account is observed to be behaving in a prohibited or suspicious manner, AWS will attempt to contact the account owner by email and phone using the contact details listed. If this is unsuccessful and the account behavior needs urgent mitigation, proactive measures may be taken, including throttling of traffic between the account exhibiting suspicious behavior and the AWS API endpoints and the Internet.",
+      "impact": "This is a manual process and requires ongoing maintenance to ensure contact details remain current.",
+      "remediation_type": "Manual",
+      "profile_applicability": "Level 1",
+      "audit_procedure": "From Console:\n1. Go to Management Console (https://console.aws.amazon.com/billing/home#/)\n2. Click on Account\n3. Scroll down to Contact Information\n4. Review and verify the current details.",
+      "remediation_procedure": "From Console:\n1. Go to Management Console (https://console.aws.amazon.com/billing/home#/)\n2. Click on Account\n3. Scroll down to Contact Information\n4. Click Edit\n5. Update the details\n6. Click Update",
+      "references": [
+        "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/manage-account-payment.html#contact-info"
+      ],
+      "additional_information": "",
+      "cis_controls_v8": [
+        {
+          "control_id": "17.2",
+          "control_name": "Establish and Maintain Contact Information for Reporting Security Incidents",
+          "control_description": "Establish and maintain contact information for parties that need to be informed of security incidents. Contacts may include internal staff, third-party vendors, law enforcement, cyber insurance providers, relevant government agencies, Information Sharing and Analysis Center (ISAC) partners, or other stakeholders. Verify contacts annually to ensure that information is up-to-date.",
+          "asset_type": "N/A",
+          "security_function": "Identify",
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": false,
+            "FaaS": false
+          },
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1.2",
+      "title": "Ensure security contact information is registered",
+      "description": "AWS provides customers with the option of specifying the contact information for account's security team. It is recommended that this information be provided.",
+      "rationale": "Specifying security-specific contact information will help ensure that security advisories sent by AWS reach the team in your organization that is best equipped to respond to them.",
+      "remediation_type": "Manual",
+      "profile_applicability": "Level 1",
+      "audit_procedure": "From Console:\n1. Click on your account name at the top right corner of the console\n2. From the drop-down menu Click My Account\n3. Scroll down to the Alternate Contacts section\n4. Ensure contact information is specified in the Security section",
+      "remediation_procedure": "From Console:\n1. Click on your account name at the top right corner of the console.\n2. From the drop-down menu Click My Account\n3. Scroll down to the Alternate Contacts section\n4. Enter contact information in the Security section",
+      "references": [
+        "CCE-79200-2",
+        "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/manage-account-payment.html#contact-info"
+      ],
+      "additional_information": "",
+      "cis_controls_v8": [
+        {
+          "control_id": "17.2",
+          "control_name": "Establish and Maintain Contact Information for Reporting Security Incidents",
+          "control_description": "Establish and maintain contact information for parties that need to be informed of security incidents. Contacts may include internal staff, third-party vendors, law enforcement, cyber insurance providers, relevant government agencies, Information Sharing and Analysis Center (ISAC) partners, or other stakeholders. Verify contacts annually to ensure that information is up-to-date.",
+          "asset_type": "N/A",
+          "security_function": "Identify",
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          },
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "control_id": "17.6",
+          "control_name": "Define Mechanisms for Communicating During Incident Response",
+          "control_description": "Determine which primary and secondary mechanisms will be used to communicate and report during a security incident. Mechanisms can include phone calls, emails, or letters. Keep in mind that certain mechanisms, such as emails, can be affected during a security incident. Review annually, or when significant enterprise changes occur that could impact this Safeguard.",
+          "asset_type": "N/A",
+          "security_function": "Respond",
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          },
+          "implementation_groups": [
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1.3",
+      "title": "Ensure security questions are registered in the AWS account",
+      "profile": "Level 1",
+      "description": "The AWS support portal allows account owners to establish security questions that can be used to authenticate individuals calling AWS customer service for support. It is recommended that security questions be established.",
+      "rationale": "When creating a new AWS account, a default super user is automatically created. This account is referred to as the 'root user' or 'root' account. It is recommended that the use of this account be limited and highly controlled. During events in which the 'root' password is no longer accessible or the MFA token associated with 'root' is lost/destroyed it is possible, through authentication using secret questions and associated answers, to recover 'root' user login access.",
+      "remediation_type": "Manual",
+      "audit": "From Console:\n1. Login to the AWS account as the 'root' user\n2. On the top right you will see the <Root_Account_Name>\n3. Click on the <Root_Account_Name>\n4. From the drop-down menu Click My Account\n5. In the Configure Security Challenge Questions section on the Personal Information page, configure three security challenge questions.\n6. Click Save questions .",
+      "remediation": "From Console:\n1. Login to the AWS Account as the 'root' user\n2. Click on the <Root_Account_Name> from the top right of the console\n3. From the drop-down menu Click My Account\n4. Scroll down to the Configure Security Questions section\n5. Click on Edit\n6. Click on each Question\n• From the drop-down select an appropriate question\n• Click on the Answer section\n• Enter an appropriate answer\n• Follow process for all 3 questions\n7. Click Update when complete\n8. Save Questions and Answers and place in a secure physical location",
+      "impact": "",
+      "default_value": "",
+      "references": [],
+      "cis_controls_v8": [
+        {
+          "id": "17.2",
+          "name": "Establish and Maintain Contact Information for Reporting Security Incidents",
+          "description": "Establish and maintain contact information for parties that need to be informed of security incidents. Contacts may include internal staff, third-party vendors, law enforcement, cyber insurance providers, relevant government agencies, Information Sharing and Analysis Center (ISAC) partners, or other stakeholders. Verify contacts annually to ensure that information is up-to-date.",
+          "asset_type": "N/A",
+          "security_function": "Respond",
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        }
+      ],
+      "additional_information": ""
+    },
+    {
+      "id": "1.4",
+      "title": "Ensure no 'root' user account access key exists",
+      "profile": "Level 1",
+      "description": "The 'root' user account is the most privileged user in an AWS account. AWS Access Keys provide programmatic access to a given AWS account. It is recommended that all access keys associated with the 'root' user account be deleted.",
+      "rationale": "Deleting access keys associated with the 'root' user account limits vectors by which the account can be compromised. Additionally, deleting the 'root' access keys encourages the creation and use of role based accounts that are least privileged.",
+      "remediation_type": "Automated",
+      "audit": "Perform the following to determine if the 'root' user account has access keys:\nFrom Console:\n1. Login to the AWS Management Console.\n2. Click Services.\n3. Click IAM.\n4. Click on Credential Report.\n5. This will download a .csv file which contains credential usage for all IAM users within an AWS Account - open this file.\n6. For the <root_account> user, ensure the access_key_1_active and access_key_2_active fields are set to FALSE.\nFrom Command Line:\nRun the following command:\naws iam get-account-summary | grep \"AccountAccessKeysPresent\"\nIf no 'root' access keys exist the output will show \"AccountAccessKeysPresent\": 0,.\nIf the output shows a \"1\", then 'root' keys exist and should be deleted.",
+      "remediation": "Perform the following to delete active 'root' user access keys.\nFrom Console:\n1. Sign in to the AWS Management Console as 'root' and open the IAM console at https://console.aws.amazon.com/iam/.\n2. Click on <root_account> at the top right and select My Security Credentials from the drop down list.\n3. On the pop out screen Click on Continue to Security Credentials.\n4. Click on Access Keys (Access Key ID and Secret Access Key).\n5. Under the Status column (if there are any Keys which are active).\n6. Click Delete (Note: Deleted keys cannot be recovered).\nNote: While a key can be made inactive, this inactive key will still show up in the CLI command from the audit procedure, and may lead to a key being falsely flagged as being non-compliant.",
+      "impact": "",
+      "default_value": "",
+      "references": [
+        "http://docs.aws.amazon.com/general/latest/gr/aws-access-keys-best-practices.html",
+        "http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html",
+        "http://docs.aws.amazon.com/IAM/latest/APIReference/API_GetAccountSummary.html",
+        "https://aws.amazon.com/blogs/security/an-easier-way-to-determine-the-presence-of-aws-account-access-keys/"
+      ],
+      "cis_controls_v8": [
+        {
+          "id": "3.3",
+          "name": "Configure Data Access Control Lists",
+          "description": "Configure data access control lists based on a user's need to know. Apply data access control lists, also known as access permissions, to local and remote file systems, databases, and applications.",
+          "asset_type": "Data",
+          "security_function": "Protect",
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        },
+        {
+          "id": "5.4",
+          "name": "Restrict Administrator Privileges to Dedicated Administrator Accounts",
+          "description": "Restrict administrator privileges to dedicated administrator accounts on enterprise assets. Conduct general computing activities, such as internet browsing, email, and productivity suite use, from the user's primary, non-privileged account.",
+          "asset_type": "Users",
+          "security_function": "Protect",
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        }
+      ],
+      "additional_information": "IAM User account \"root\" for us-gov cloud regions is not enabled by default. However, on request to AWS support enables 'root' access only through access-keys (CLI, API methods) for us-gov cloud region."
+    },
+    {
+      "id": "1.5",
+      "title": "Ensure MFA is enabled for the 'root' user account",
+      "profile": "Level 1",
+      "description": "The root user account is the most privileged user in an AWS account. Multi-factor Authentication (MFA) adds an extra layer of protection on top of a username and password. With MFA enabled, when a user signs in to an AWS website, they will be prompted for their username and password as well as for an authentication code from their AWS MFA device.",
+      "rationale": "Enabling MFA provides increased security for console access as it requires the authenticating principal to possess a device that emits a time-sensitive key and have knowledge of a credential.",
+      "remediation_type": "Automated",
+      "audit": "Perform the following to determine if the 'root' user account has MFA setup:\nFrom Console:\n1. Login to the AWS Management Console\n2. Click Services\n3. Click IAM\n4. Click on Credential Report\n5. This will download a .csv file which contains credential usage for all IAM users within an AWS Account - open this file\n6. For the <root_account> user, ensure the mfa_active field is set to TRUE .\nFrom Command Line:\n1. Run the following command:\naws iam get-account-summary | grep \"AccountMFAEnabled\"\n2. Ensure the AccountMFAEnabled property is set to 1",
+      "remediation": "Perform the following to establish MFA for the 'root' user account:\n1. Sign in to the AWS Management Console and open the IAM console at https://console.aws.amazon.com/iam/.\nNote: to manage MFA devices for the 'root' AWS account, you must use your 'root' account credentials to sign in to AWS. You cannot manage MFA devices for the 'root' account using other credentials.\n2. Choose Dashboard , and under Security Status , expand Activate MFA on your root account.\n3. Choose Activate MFA\n4. In the wizard, choose A virtual MFA device and then choose Next Step .\n5. IAM generates and displays configuration information for the virtual MFA device, including a QR code graphic. The graphic is a representation of the 'secret configuration key' that is available for manual entry on devices that do not support QR codes.\n6. Open your virtual MFA application. (For a list of apps that you can use for hosting virtual MFA devices, see Virtual MFA Applications.) If the virtual MFA application supports multiple accounts (multiple virtual MFA devices), choose the option to create a new account (a new virtual MFA device).\n7. Determine whether the MFA app supports QR codes, and then do one of the following:\n• Use the app to scan the QR code. For example, you might choose the camera icon or choose an option similar to Scan code, and then use the device's camera to scan the code.\n• In the Manage MFA Device wizard, choose Show secret key for manual configuration, and then type the secret configuration key into your MFA application.\nWhen you are finished, the virtual MFA device starts generating one-time passwords.\nIn the Manage MFA Device wizard, in the Authentication Code 1 box, type the one-time password that currently appears in the virtual MFA device. Wait up to 30 seconds for the device to generate a new one-time password. Then type the second one-time password into the Authentication Code 2 box. Choose Assign Virtual MFA.",
+      "impact": "AWS will soon end support for SMS multi-factor authentication (MFA). New customers are not allowed to use this feature. We recommend that existing customers switch to one of the following alternative methods of MFA.",
+      "default_value": "",
+      "references": [
+        "https://tools.ietf.org/html/rfc6238",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#enable-mfa-for-privileged-users",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable_virtual.html",
+        "https://blogs.aws.amazon.com/security/post/Tx2SJJYE082KBUK/How-to-Delegate-Management-of-Multi-Factor-Authentication-to-AWS-IAM-Users"
+      ],
+      "cis_controls_v8": [
+        {
+          "id": "6.5",
+          "name": "Require MFA for Administrative Access",
+          "description": "Require MFA for all administrative access accounts, where supported, on all enterprise assets, whether managed on-site or through a third-party provider.",
+          "asset_type": "Users",
+          "security_function": "Protect",
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        }
+      ],
+      "additional_information": "IAM User account \"root\" for us-gov cloud regions does not have console access. This recommendation is not applicable for us-gov cloud regions."
+    },
+    {
+      "id": "1.6",
+      "title": "Ensure hardware MFA is enabled for the 'root' user account",
+      "profile": "Level 2",
+      "description": "The 'root' user account is the most privileged user in an AWS account. MFA adds an extra layer of protection on top of a user name and password. With MFA enabled, when a user signs in to an AWS website, they will be prompted for their user name and password as well as for an authentication code from their AWS MFA device. For Level 2, it is recommended that the root user account be protected with a hardware MFA.",
+      "rationale": "A hardware MFA has a smaller attack surface than a virtual MFA. For example, a hardware MFA does not suffer the attack surface introduced by the mobile smartphone on which a virtual MFA resides.",
+      "remediation_type": "Manual",
+      "audit": "Perform the following to determine if the 'root' user account has a hardware MFA setup:\n1. Run the following command to determine if the 'root' account has MFA setup:\naws iam get-account-summary | grep \"AccountMFAEnabled\"\nThe AccountMFAEnabled property is set to 1 will ensure that the 'root' user account has MFA (Virtual or Hardware) Enabled.\nIf AccountMFAEnabled property is set to 0 the account is not compliant with this recommendation.\n2. If AccountMFAEnabled property is set to 1, determine 'root' account has Hardware MFA enabled.\nRun the following command to list all virtual MFA devices:\naws iam list-virtual-mfa-devices\nIf the output contains one MFA with the following Serial Number, it means the MFA is virtual, not hardware and the account is not compliant with this recommendation:\n\"SerialNumber\": \"arn:aws:iam::_<aws_account_number>_:mfa/root-account-mfa-device\"",
+      "remediation": "Perform the following to establish a hardware MFA for the 'root' user account:\n1. Sign in to the AWS Management Console and open the IAM console at https://console.aws.amazon.com/iam/.\nNote: to manage MFA devices for the AWS 'root' user account, you must use your 'root' account credentials to sign in to AWS. You cannot manage MFA devices for the 'root' account using other credentials.\n2. Choose Dashboard , and under Security Status , expand Activate MFA on your root account.\n3. Choose Activate MFA\n4. In the wizard, choose A hardware MFA device and then choose Next Step .\n5. In the Serial Number box, enter the serial number that is found on the back of the MFA device.\n6. In the Authentication Code 1 box, enter the six-digit number displayed by the MFA device. You might need to press the button on the front of the device to display the number.\n7. Wait 30 seconds while the device refreshes the code, and then enter the next six-digit number into the Authentication Code 2 box. You might need to press the button on the front of the device again to display the second number.\n8. Choose Next Step . The MFA device is now associated with the AWS account. The next time you use your AWS account credentials to sign in, you must type a code from the hardware MFA device.",
+      "impact": "",
+      "default_value": "",
+      "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable_virtual.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable_physical.html#enable-hw-mfa-for-root"
+      ],
+      "cis_controls_v8": [
+        {
+          "id": "6.5",
+          "name": "Require MFA for Administrative Access",
+          "description": "Require MFA for all administrative access accounts, where supported, on all enterprise assets, whether managed on-site or through a third-party provider.",
+          "asset_type": "Users",
+          "security_function": "Protect",
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        }
+      ],
+      "additional_information": "IAM User account 'root' for us-gov cloud regions does not have console access. This control is not applicable for us-gov cloud regions."
+    },
+    {
+      "id": "1.7",
+      "title": "Eliminate use of the 'root' user for administrative and daily tasks",
+      "profile": "Level 1",
+      "description": "With the creation of an AWS account, a 'root user' is created that cannot be disabled or deleted. That user has unrestricted access to and control over all resources in the AWS account. It is highly recommended that the use of this account be avoided for everyday tasks.",
+      "rationale": "The 'root user' has unrestricted access to and control over all account resources. Use of it is inconsistent with the principles of least privilege and separation of duties, and can lead to unnecessary harm due to error or account compromise.",
+      "remediation_type": "Manual",
+      "audit": "From Console:\n1. Login to the AWS Management Console at https://console.aws.amazon.com/iam/\n2. In the left pane, click Credential Report\n3. Click on Download Report\n4. Open of Save the file locally\n5. Locate the <root account> under the user column\n6. Review password_last_used, access_key_1_last_used_date, access_key_2_last_used_date to determine when the 'root user' was last used.\nFrom Command Line:\nRun the following CLI commands to provide a credential report for determining the last time the 'root user' was used:\naws iam generate-credential-report\naws iam get-credential-report --query 'Content' --output text | base64 -d | cut -d, -f1,5,11,16 | grep -B1 '<root_account>'\nReview password_last_used, access_key_1_last_used_date, access_key_2_last_used_date to determine when the root user was last used.",
+      "remediation": "If you find that the 'root' user account is being used for daily activity to include administrative tasks that do not require the 'root' user:\n1. Change the 'root' user password.\n2. Deactivate or delete any access keys associated with the 'root' user.\n**Remember, anyone who has 'root' user credentials for your AWS account has unrestricted access to and control of all the resources in your account, including billing information.",
+      "impact": "",
+      "default_value": "",
+      "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_root-user.html",
+        "https://docs.aws.amazon.com/general/latest/gr/aws_tasks-that-require-root.html"
+      ],
+      "cis_controls_v8": [
+        {
+          "id": "5.4",
+          "name": "Restrict Administrator Privileges to Dedicated Administrator Accounts",
+          "description": "Restrict administrator privileges to dedicated administrator accounts on enterprise assets. Conduct general computing activities, such as internet browsing, email, and productivity suite use, from the user's primary, non-privileged account.",
+          "asset_type": "Users",
+          "security_function": "Protect",
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        }
+      ],
+      "additional_information": "The 'root' user for us-gov cloud regions is not enabled by default. However, on request to AWS support, they can enable the 'root' user and grant access only through access-keys (CLI, API methods) for us-gov cloud region. If the 'root' user for us-gov cloud regions is enabled, this recommendation is applicable."
+    },
+    {
+      "id": "1.8",
+      "title": "Ensure IAM password policy requires minimum length of 14 or greater",
+      "profile": "Level 1",
+      "description": "Password policies are, in part, used to enforce password complexity requirements. IAM password policies can be used to ensure password are at least a given length. It is recommended that the password policy require a minimum password length 14.",
+      "rationale": "Setting a password complexity policy increases account resiliency against brute force login attempts.",
+      "remediation_type": "Automated",
+      "audit": "Perform the following to ensure the password policy is configured as prescribed:\nFrom Console:\n1. Login to AWS Console (with appropriate permissions to View Identity Access Management Account Settings)\n2. Go to IAM Service on the AWS Console\n3. Click on Account Settings on the Left Pane\n4. Ensure \"Minimum password length\" is set to 14 or greater.\nFrom Command Line:\naws iam get-account-password-policy\nEnsure the output of the above command includes \"MinimumPasswordLength\": 14 (or higher)",
+      "remediation": "Perform the following to set the password policy as prescribed:\nFrom Console:\n1. Login to AWS Console (with appropriate permissions to View Identity Access Management Account Settings)\n2. Go to IAM Service on the AWS Console\n3. Click on Account Settings on the Left Pane\n4. Set \"Minimum password length\" to 14 or greater.\n5. Click \"Apply password policy\"\nFrom Command Line:\naws iam update-account-password-policy --minimum-password-length 14\nNote: All commands starting with \"aws iam update-account-password-policy\" can be combined into a single command.",
+      "impact": "",
+      "default_value": "",
+      "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_passwords_account-policy.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#configure-strong-password-policy"
+      ],
+      "cis_controls_v8": [
+        {
+          "id": "5.2",
+          "name": "Use Unique Passwords",
+          "description": "Use unique passwords for all enterprise assets. Best practice implementation includes, at a minimum, an 8-character password for accounts using MFA and a 14-character password for accounts not using MFA.",
+          "asset_type": "Users",
+          "security_function": "Protect",
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        }
+      ],
+      "additional_information": ""
+    },
+    {
+      "id": "1.9",
+      "title": "Ensure IAM password policy prevents password reuse",
+      "profile": "Level 1",
+      "description": "IAM password policies can prevent the reuse of a given password by the same user. It is recommended that the password policy prevent the reuse of passwords.",
+      "rationale": "Preventing password reuse increases account resiliency against brute force login attempts.",
+      "remediation_type": "Automated",
+      "audit": "Perform the following to ensure the password policy is configured as prescribed:\nFrom Console:\n1. Login to AWS Console (with appropriate permissions to View Identity Access Management Account Settings)\n2. Go to IAM Service on the AWS Console\n3. Click on Account Settings on the Left Pane\n4. Ensure \"Prevent password reuse\" is checked\n5. Ensure \"Number of passwords to remember\" is set to 24\nFrom Command Line:\naws iam get-account-password-policy\nEnsure the output of the above command includes \"PasswordReusePrevention\": 24",
+      "remediation": "Perform the following to set the password policy as prescribed:\nFrom Console:\n1. Login to AWS Console (with appropriate permissions to View Identity Access Management Account Settings)\n2. Go to IAM Service on the AWS Console\n3. Click on Account Settings on the Left Pane\n4. Check \"Prevent password reuse\"\n5. Set \"Number of passwords to remember\" is set to 24\nFrom Command Line:\naws iam update-account-password-policy --password-reuse-prevention 24\nNote: All commands starting with \"aws iam update-account-password-policy\" can be combined into a single command.",
+      "impact": "",
+      "default_value": "",
+      "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_passwords_account-policy.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#configure-strong-password-policy"
+      ],
+      "cis_controls_v8": [
+        {
+          "id": "5.2",
+          "name": "Use Unique Passwords",
+          "description": "Use unique passwords for all enterprise assets. Best practice implementation includes, at a minimum, an 8-character password for accounts using MFA and a 14-character password for accounts not using MFA.",
+          "asset_type": "Users",
+          "security_function": "Protect",
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        }
+      ],
+      "additional_information": ""
+    },
+    {
+      "id": "1.10",
+      "title": "Ensure multi-factor authentication (MFA) is enabled for all IAM users that have a console password",
+      "description": "Multi-Factor Authentication (MFA) adds an extra layer of authentication assurance beyond traditional credentials. With MFA enabled, when a user signs in to the AWS Console, they will be prompted for their user name and password as well as for an authentication code from their physical or virtual MFA token. It is recommended that MFA be enabled for all accounts that have a console password.",
+      "rationale": "Enabling MFA provides increased security for console access as it requires the authenticating principal to possess a device that displays a time-sensitive key and have knowledge of a credential.",
+      "remediation_type": "Automated",
+      "profile_applicability": "Level 1",
+      "audit_procedure": "Perform the following to determine if a MFA device is enabled for all IAM users having a console password:\n\nFrom Console:\n\n1. Open the IAM console at https://console.aws.amazon.com/iam/.\n2. In the left pane, select Users\n3. If the MFA or Password age columns are not visible in the table, click the gear icon at the upper right corner of the table and ensure a checkmark is next to both, then click Close.\n4. Ensure that for each user where the Password age column shows a password age, the MFA column shows Virtual, U2F Security Key, or Hardware.\n\nFrom Command Line:\n\n1. Run the following command (OSX/Linux/UNIX) to generate a list of all IAM users along with their password and MFA status:\n\naws iam generate-credential-report\naws iam get-credential-report --query 'Content' --output text | base64 -d | cut -d, -f1,4,8\n\n2. The output of this command will produce a table similar to the following:\n\nuser,password_enabled,mfa_active\nelise,false,false\nbrandon,true,true\nrakesh,false,false\nhelene,false,false\nparas,true,true\nanitha,false,false\n\n3. For any column having password_enabled set to true , ensure mfa_active is also set to true.",
+      "remediation_procedure": "Perform the following to enable MFA:\n\nFrom Console:\n\n1. Sign in to the AWS Management Console and open the IAM console at 'https://console.aws.amazon.com/iam/'\n2. In the left pane, select Users.\n3. In the User Name list, choose the name of the intended MFA user.\n4. Choose the Security Credentials tab, and then choose Manage MFA Device.\n5. In the Manage MFA Device wizard, choose Virtual MFA device, and then choose Continue.\n\nIAM generates and displays configuration information for the virtual MFA device, including a QR code graphic. The graphic is a representation of the 'secret configuration key' that is available for manual entry on devices that do not support QR codes.\n\n6. Open your virtual MFA application. (For a list of apps that you can use for hosting virtual MFA devices, see Virtual MFA Applications at https://aws.amazon.com/iam/details/mfa/#Virtual_MFA_Applications). If the virtual MFA application supports multiple accounts (multiple virtual MFA devices), choose the option to create a new account (a new virtual MFA device).\n7. Determine whether the MFA app supports QR codes, and then do one of the following:\n   • Use the app to scan the QR code. For example, you might choose the camera icon or choose an option similar to Scan code, and then use the device's camera to scan the code.\n   • In the Manage MFA Device wizard, choose Show secret key for manual configuration, and then type the secret configuration key into your MFA application.\nWhen you are finished, the virtual MFA device starts generating one-time passwords.\n8. In the Manage MFA Device wizard, in the MFA Code 1 box, type the one-time password that currently appears in the virtual MFA device. Wait up to 30 seconds for the device to generate a new one-time password. Then type the second one-time password into the MFA Code 2 box.\n9. Click Assign MFA.",
+      "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#enable-mfa-for-privileged-users",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_enable_virtual.html",
+        "CCE-78901-6",
+        "https://blogs.aws.amazon.com/security/post/Tx2SJJYE082KBUK/How-to-Delegate-Management-of-Multi-Factor-Authentication-to-AWS-IAM-Users"
+      ],
+      "cis_controls_v8": [
+        {
+          "control_id": "6.5",
+          "control_name": "Require MFA for Administrative Access",
+          "control_description": "Require MFA for all administrative access accounts, where supported, on all enterprise assets, whether managed on-site or through a third-party provider.",
+          "asset_type": "Users",
+          "security_function": "Protect",
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          },
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1.11",
+      "title": "Do not setup access keys during initial user setup for all IAM users that have a console password",
+      "description": "AWS console defaults to no check boxes selected when creating a new IAM user. When creating the IAM User credentials you have to determine what type of access they require.",
+      "rationale": "Requiring the additional steps be taken by the user for programmatic access after their profile has been created will give a stronger indication of intent that access keys are [a] necessary for their work and [b] once the access key is established on an account that the keys may be in use somewhere in the organization.",
+      "remediation_type": "Manual",
+      "profile_applicability": "Level 1",
+      "audit_procedure": "Perform the following to determine if access keys were created upon user creation and are being used and rotated as prescribed:\n\nFrom Console:\n\n1. Login to the AWS Management Console\n2. Click Services\n3. Click IAM\n4. Click on a User where column Password age and Access key age is not set to None\n5. Click on Security credentials Tab\n6. Compare the user Creation time to the Access Key Created date.\n7. For any that match, the key was created during initial user setup.\n   • Keys that were created at the same time as the user profile and do not have a last used date should be deleted. Refer to the remediation below.\n\nFrom Command Line:\n\n1. Run the following command (OSX/Linux/UNIX) to generate a list of all IAM users along with their access keys utilization:\n\naws iam generate-credential-report\naws iam get-credential-report --query 'Content' --output text | base64 -d | cut -d, -f1,4,9,11,14,16\n\n2. The output of this command will produce a table similar to the following:\n\nuser,password_enabled,access_key_1_active,access_key_1_last_used_date,access_key_2_active,access_key_2_last_used_date\nelise,false,true,2015-04-16T15:14:00+00:00,false,N/A\nbrandon,true,true,N/A,false,N/A\nrakesh,false,false,N/A,false,N/A\nhelene,false,true,2015-11-18T17:47:00+00:00,false,N/A\nparas,true,true,2016-08-28T12:04:00+00:00,true,2016-03-04T10:11:00+00:00\nanitha,true,true,2016-06-08T11:43:00+00:00,true,N/A\n\n3. For any user having password_enabled set to true AND access_key_last_used_date set to N/A refer to the remediation below.",
+      "remediation_procedure": "Perform the following to delete access keys that do not pass the audit:\n\nFrom Console:\n\n1. Login to the AWS Management Console:\n2. Click Services\n3. Click IAM\n4. Click on Users\n5. Click on Security Credentials\n6. As an Administrator\n   • Click on the X (Delete) for keys that were created at the same time as the user profile but have not been used.\n7. As an IAM User\n   • Click on the X (Delete) for keys that were created at the same time as the user profile but have not been used.\n\nFrom Command Line:\n\naws iam delete-access-key --access-key-id <access-key-id-listed> --user-name <users-name>",
+      "references": [
+        "https://docs.aws.amazon.com/cli/latest/reference/iam/delete-access-key.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html"
+      ],
+      "cis_controls_v8": [
+        {
+          "control_id": "3.3",
+          "control_name": "Configure Data Access Control Lists",
+          "control_description": "Configure data access control lists based on a user's need to know. Apply data access control lists, also known as access permissions, to local and remote file systems, databases, and applications.",
+          "asset_type": "Data",
+          "security_function": "Protect",
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          },
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ]
+        },
+        {
+          "control_id": "5.4",
+          "control_name": "Restrict Administrator Privileges to Dedicated Administrator Accounts",
+          "control_description": "Restrict administrator privileges to dedicated administrator accounts on enterprise assets. Conduct general computing activities, such as internet browsing, email, and productivity suite use, from the user's primary, non-privileged account.",
+          "asset_type": "Users",
+          "security_function": "Protect",
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          },
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ]
+        }
+      ]
+    },
+    {
+      "id": "1.12",
+      "title": "Ensure credentials unused for 45 days or greater are disabled",
+      "profile": "Level 1",
+      "description": "AWS IAM users can access AWS resources using different types of credentials, such as passwords or access keys. It is recommended that all credentials that have been unused in 45 or greater days be deactivated or removed.",
+      "rationale": "Disabling or removing unnecessary credentials will reduce the window of opportunity for credentials associated with a compromised or abandoned account to be used.",
+      "remediation_type": "Automated",
+      "audit": "Perform the following to determine if unused credentials exist:\n\nFrom Console:\n\n1. Login to the AWS Management Console\n2. Click Services\n3. Click IAM\n4. Click on Users\n5. Click the Settings (gear) icon.\n6. Select Console last sign-in, Access key last used, and Access Key Id\n7. Click on Close\n8. Check and ensure that Console last sign-in is less than 45 days ago.\nNote - Never means the user has never logged in.\n9. Check and ensure that Access key age is less than 45 days and that Access key last used does not say None\n\nIf the user hasn't signed into the Console in the last 45 days or Access keys are over 45 days old refer to the remediation.\n\nFrom Command Line:\n\nDownload Credential Report:\n\n1. Run the following commands:\n\naws iam generate-credential-report\naws iam get-credential-report --query 'Content' --output text | base64 -d | cut -d, -f1,4,5,6,9,10,11,14,15,16 | grep -v '^<root_account>'\n\nEnsure unused credentials do not exist:\n\n2. For each user having password_enabled set to TRUE , ensure password_last_used_date is less than 45 days ago.\n• When password_enabled is set to TRUE and password_last_used is set to No_Information , ensure password_last_changed is less than 45 days ago.\n\n3. For each user having an access_key_1_active or access_key_2_active to TRUE , ensure the corresponding access_key_n_last_used_date is less than 45 days ago.\n• When a user having an access_key_x_active (where x is 1 or 2) to TRUE and corresponding access_key_x_last_used_date is set to N/A', ensure access_key_x_last_rotated` is less than 45 days ago.",
+      "remediation": "Perform the following to manage Unused Password (IAM user console access)\n\n1. Login to the AWS Management Console:\n2. Click Services\n3. Click IAM\n4. Click on Users\n5. Click on Security Credentials\n6. Select user whose Console last sign-in is greater than 45 days\n7. Click Security credentials\n8. In section Sign-in credentials, Console password click Manage\n9. Under Console Access select Disable\n10.Click Apply\n\nPerform the following to deactivate Access Keys:\n\n1. Login to the AWS Management Console:\n2. Click Services\n3. Click IAM\n4. Click on Users\n5. Click on Security Credentials\n6. Select any access keys that are over 45 days old and that have been used and\n• Click on Make Inactive\n7. Select any access keys that are over 45 days old and that have not been used and\n• Click the X to Delete",
+      "impact": "",
+      "default_value": "",
+      "references": [
+        "CCE-78900-8",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#remove-credentials",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_finding-unused.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_passwords_admin-change-user.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html"
+      ],
+      "cis_controls_v8": [
+        {
+          "id": "5.3",
+          "name": "Disable Dormant Accounts",
+          "description": "Delete or disable any dormant accounts after a period of 45 days of inactivity, where supported.",
+          "asset_type": "Users",
+          "security_function": "Protect",
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        }
+      ],
+      "additional_information": "<root_account> is excluded in the audit since the root account should not be used for day to day business and would likely be unused for more than 45 days."
+    },
+    {
+      "id": "1.13",
+      "title": "Ensure there is only one active access key available for any single IAM user",
+      "profile": "Level 1",
+      "description": "Access keys are long-term credentials for an IAM user or the AWS account 'root' user. You can use access keys to sign programmatic requests to the AWS CLI or AWS API (directly or using the AWS SDK)",
+      "rationale": "Access keys are long-term credentials for an IAM user or the AWS account 'root' user. You can use access keys to sign programmatic requests to the AWS CLI or AWS API. One of the best ways to protect your account is to not allow users to have multiple access keys.",
+      "remediation_type": "Automated",
+      "audit": "From Console:\n\n1. Sign in to the AWS Management Console and navigate to IAM dashboard at https://console.aws.amazon.com/iam/.\n2. In the left navigation panel, choose Users.\n3. Click on the IAM user name that you want to examine.\n4. On the IAM user configuration page, select Security Credentials tab.\n5. Under Access Keys section, in the Status column, check the current status for each access key associated with the IAM user. If the selected IAM user has more than one access key activated then the users access configuration does not adhere to security best practices and the risk of accidental exposures increases.\n• Repeat steps no. 3 – 5 for each IAM user in your AWS account.\n\nFrom Command Line:\n\n1. Run list-users command to list all IAM users within your account:\n\naws iam list-users --query \"Users[*].UserName\"\n\nThe command output should return an array that contains all your IAM user names.\n\n2. Run list-access-keys command using the IAM user name list to return the current status of each access key associated with the selected IAM user:\n\naws iam list-access-keys --user-name <user-name>\n\nThe command output should expose the metadata (\"Username\", \"AccessKeyId\", \"Status\", \"CreateDate\") for each access key on that user account.\n\n3. Check the Status property value for each key returned to determine each keys current state. If the Status property value for more than one IAM access key is set to Active, the user access configuration does not adhere to this recommendation, refer to the remediation below.\n• Repeat steps no. 2 and 3 for each IAM user in your AWS account.",
+      "remediation": "From Console:\n\n1. Sign in to the AWS Management Console and navigate to IAM dashboard at https://console.aws.amazon.com/iam/.\n2. In the left navigation panel, choose Users.\n3. Click on the IAM user name that you want to examine.\n4. On the IAM user configuration page, select Security Credentials tab.\n5. In Access Keys section, choose one access key that is less than 90 days old. This should be the only active key used by this IAM user to access AWS resources programmatically. Test your application(s) to make sure that the chosen access key is working.\n6. In the same Access Keys section, identify your non-operational access keys (other than the chosen one) and deactivate it by clicking the Make Inactive link.\n7. If you receive the Change Key Status confirmation box, click Deactivate to switch off the selected key.\n8. Repeat steps no. 3 – 7 for each IAM user in your AWS account.\n\nFrom Command Line:\n\n1. Using the IAM user and access key information provided in the Audit CLI, choose one access key that is less than 90 days old. This should be the only active key used by this IAM user to access AWS resources programmatically. Test your application(s) to make sure that the chosen access key is working.\n2. Run the update-access-key command below using the IAM user name and the non-operational access key IDs to deactivate the unnecessary key(s). Refer to the Audit section to identify the unnecessary access key ID for the selected IAM user\n\nNote - the command does not return any output:\n\naws iam update-access-key --access-key-id <access-key-id> --status Inactive --user-name <user-name>\n\n3. To confirm that the selected access key pair has been successfully deactivated run the list-access-keys audit command again for that IAM User:\n\naws iam list-access-keys --user-name <user-name>\n\n• The command output should expose the metadata for each access key associated with the IAM user. If the non-operational key pair(s) Status is set to Inactive, the key has been successfully deactivated and the IAM user access configuration adheres now to this recommendation.\n\n4. Repeat steps no. 1 – 3 for each IAM user in your AWS account.",
+      "impact": "",
+      "default_value": "",
+      "references": [
+        "https://docs.aws.amazon.com/general/latest/gr/aws-access-keys-best-practices.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html"
+      ],
+      "cis_controls_v8": [
+        {
+          "id": "5.2",
+          "name": "Use Unique Passwords",
+          "description": "Use unique passwords for all enterprise assets. Best practice implementation includes, at a minimum, an 8-character password for accounts using MFA and a 14-character password for accounts not using MFA.",
+          "asset_type": "Users",
+          "security_function": "Protect",
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        }
+      ],
+      "additional_information": ""
+    },
+    {
+      "id": "1.14",
+      "title": "Ensure access keys are rotated every 90 days or less",
+      "description": "Access keys consist of an access key ID and secret access key, which are used to sign programmatic requests that you make to AWS. AWS users need their own access keys to make programmatic calls to AWS from the AWS Command Line Interface (AWS CLI), Tools for Windows PowerShell, the AWS SDKs, or direct HTTP calls using the APIs for individual AWS services. It is recommended that all access keys be regularly rotated.",
+      "rationale": "Rotating access keys will reduce the window of opportunity for an access key that is associated with a compromised or terminated account to be used. Access keys should be rotated to ensure that data cannot be accessed with an old key which might have been lost, cracked, or stolen.",
+      "remediation_type": "Automated",
+      "profile_applicability": "Level 1",
+      "audit_procedure": "Perform the following to determine if access keys are rotated as prescribed:\n\nFrom Console:\n\n1. Go to Management Console (https://console.aws.amazon.com/iam)\n2. Click on Users\n3. Click setting icon\n4. Select Console last sign-in\n5. Click Close\n6. Ensure that Access key age is less than 90 days ago. note) None in the Access key age means the user has not used the access key.\n\nFrom Command Line:\n\naws iam generate-credential-report\naws iam get-credential-report --query 'Content' --output text | base64 -d\n\nThe access_key_1_last_rotated and the access_key_2_last_rotated fields in this file notes The date and time, in ISO 8601 date-time format, when the user's access key was created or last changed. If the user does not have an active access key, the value in this field is N/A (not applicable).",
+      "remediation_procedure": "Perform the following to rotate access keys:\n\nFrom Console:\n\n1. Go to Management Console (https://console.aws.amazon.com/iam)\n2. Click on Users\n3. Click on Security Credentials\n4. As an Administrator\n   o Click on Make Inactive for keys that have not been rotated in 90 Days\n5. As an IAM User\n   o Click on Make Inactive or Delete for keys which have not been rotated or used in 90 Days\n6. Click on Create Access Key\n7. Update programmatic call with new Access Key credentials\n\nFrom Command Line:\n\n1. While the first access key is still active, create a second access key, which is active by default. Run the following command:\n\naws iam create-access-key\n\nAt this point, the user has two active access keys.\n\n2. Update all applications and tools to use the new access key.\n\n3. Determine whether the first access key is still in use by using this command:\n\naws iam get-access-key-last-used\n\n4. One approach is to wait several days and then check the old access key for any use before proceeding.\n\nEven if step Step 3 indicates no use of the old key, it is recommended that you do not immediately delete the first access key. Instead, change the state of the first access key to Inactive using this command:\n\naws iam update-access-key\n\n5. Use only the new access key to confirm that your applications are working. Any applications and tools that still use the original access key will stop working at this point because they no longer have access to AWS resources. If you find such an application or tool, you can switch its state back to Active to reenable the first access key. Then return to step Step 2 and update this application to use the new key.\n\n6. After you wait some period of time to ensure that all applications and tools have been updated, you can delete the first access key with this command:\n\naws iam delete-access-key",
+      "references": [
+        "CCE-78902-4",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#rotate-credentials",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_finding-unused.html",
+        "https://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html"
+      ],
+      "cis_controls_v8": [
+        {
+          "control_id": "5.5",
+          "control_name": "Establish and Maintain an Inventory of Accounts",
+          "control_description": "Establish and maintain an inventory of all accounts managed in the enterprise. The inventory must include both user and administrator accounts. The inventory, at a minimum, should contain the person's name, username, start/stop dates, and department. Validate that all active accounts are authorized, on a recurring schedule at a minimum quarterly, or more frequently.",
+          "asset_type": "Users",
+          "security_function": "Identify",
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          },
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "additional_information": "Losing access or removing the KMS key in use by the access keys will result in no longer being able to access the resources using those keys."
+    },
+    {
+      "id": "1.15",
+      "title": "Ensure IAM Users Receive Permissions Only Through Groups",
+      "description": "IAM users are granted access to services, functions, and data through IAM policies. There are four ways to define policies for a user: 1) Edit the user policy directly, aka an inline, or user, policy; 2) attach a policy directly to a user; 3) add the user to an IAM group that has an attached policy; 4) add the user to an IAM group that has an inline policy. Only the third implementation is recommended.",
+      "rationale": "Assigning IAM policy only through groups unifies permissions management to a single, flexible layer consistent with organizational functional roles. By unifying permissions management, the likelihood of excessive permissions is reduced.",
+      "remediation_type": "Automated",
+      "profile_applicability": "Level 1",
+      "audit_procedure": "Perform the following to determine if an inline policy is set or a policy is directly attached to users:\n\n1. Run the following to get a list of IAM users:\n\naws iam list-users --query 'Users[*].UserName' --output text\n\n2. For each user returned, run the following command to determine if any policies are attached to them:\n\naws iam list-attached-user-policies --user-name <iam_user>\naws iam list-user-policies --user-name <iam_user>\n\n3. If any policies are returned, the user has an inline policy or direct policy attachment.",
+      "remediation_procedure": "Perform the following to create an IAM group and assign a policy to it:\n\n1. Sign in to the AWS Management Console and open the IAM console at https://console.aws.amazon.com/iam/.\n2. In the navigation pane, click Groups and then click Create New Group .\n3. In the Group Name box, type the name of the group and then click Next Step .\n4. In the list of policies, select the check box for each policy that you want to apply to all members of the group. Then click Next Step .\n5. Click Create Group\n\nPerform the following to add a user to a given group:\n\n1. Sign in to the AWS Management Console and open the IAM console at https://console.aws.amazon.com/iam/.\n2. In the navigation pane, click Groups\n3. Select the group to add a user to\n4. Click Add Users To Group\n5. Select the users to be added to the group\n6. Click Add Users\n\nPerform the following to remove a direct association between a user and policy:\n\n1. Sign in to the AWS Management Console and open the IAM console at https://console.aws.amazon.com/iam/.\n2. In the left navigation pane, click on Users\n3. For each user:\n   o Select the user\n   o Click on the Permissions tab\n   o Expand Permissions policies\n   o Click X for each policy; then click Detach or Remove (depending on policy type)",
+      "references": [
+        "http://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html",
+        "http://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html",
+        "CCE-78912-3"
+      ],
+      "cis_controls_v8": [
+        {
+          "control_id": "6.8",
+          "control_name": "Define and Maintain Role-Based Access Control",
+          "control_description": "Define and maintain role-based access control, through determining and documenting the access rights necessary for each role within the enterprise to successfully carry out its assigned duties. Perform access control reviews of enterprise assets to validate that all privileges are authorized, on a recurring schedule at a minimum annually, or more frequently.",
+          "asset_type": "Users",
+          "security_function": "Protect",
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          },
+          "implementation_groups": [
+            2,
+            3
+          ]
+        }
+      ],
+      "additional_information": "When removing direct policy associations, ensure that the user still has the necessary permissions through group membership. It's important to maintain the principle of least privilege while transitioning to group-based permissions management."
+    },
+    {
+      "id": "1.16",
+      "title": "Ensure IAM policies that allow full \"*:*\" administrative privileges are not attached",
+      "profile": "Level 1",
+      "description": "IAM policies are the means by which privileges are granted to users, groups, or roles. It is recommended and considered a standard security advice to grant least privilege -that is, granting only the permissions required to perform a task. Determine what users need to do and then craft policies for them that let the users perform only those tasks, instead of allowing full administrative privileges.",
+      "rationale": "It's more secure to start with a minimum set of permissions and grant additional permissions as necessary, rather than starting with permissions that are too lenient and then trying to tighten them later.\n\nProviding full administrative privileges instead of restricting to the minimum set of permissions that the user is required to do exposes the resources to potentially unwanted actions.\n\nIAM policies that have a statement with \"Effect\": \"Allow\" with \"Action\": \"*\" over \"Resource\": \"*\" should be removed.",
+      "remediation_type": "Automated",
+      "audit_procedure": "Perform the following to determine what policies are created:\n\nFrom Command Line:\n\n1. Run the following to get a list of IAM policies:\n\naws iam list-policies --only-attached --output text\n\n2. For each policy returned, run the following command to determine if any policies is allowing full administrative privileges on the account:\n\naws iam get-policy-version --policy-arn <policy_arn> --version-id <version>\n\n3. In output ensure policy should not have any Statement block with \"Effect\": \"Allow\" and Action set to \"*\" and Resource set to \"*\"",
+      "remediation_procedure": "From Console:\n\nPerform the following to detach the policy that has full administrative privileges:\n\n1. Sign in to the AWS Management Console and open the IAM console at https://console.aws.amazon.com/iam/.\n2. In the navigation pane, click Policies and then search for the policy name found in the audit step.\n3. Select the policy that needs to be deleted.\n4. In the policy action menu, select first Detach\n5. Select all Users, Groups, Roles that have this policy attached\n6. Click Detach Policy\n7. In the policy action menu, select Detach\n8. Select the newly detached policy and select Delete\n\nFrom Command Line:\n\nPerform the following to detach the policy that has full administrative privileges as found in the audit step:\n\n1. Lists all IAM users, groups, and roles that the specified managed policy is attached to.\n\naws iam list-entities-for-policy --policy-arn <policy_arn>\n\n2. Detach the policy from all IAM Users:\n\naws iam detach-user-policy --user-name <iam_user> --policy-arn <policy_arn>\n\n3. Detach the policy from all IAM Groups:\n\naws iam detach-group-policy --group-name <iam_group> --policy-arn <policy_arn>\n\n4. Detach the policy from all IAM Roles:\n\naws iam detach-role-policy --role-name <iam_role> --policy-arn <policy_arn>",
+      "impact": "",
+      "default_value": "",
+      "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html",
+        "CCE-78912-3",
+        "https://docs.aws.amazon.com/cli/latest/reference/iam/index.html#cli-aws-iam"
+      ],
+      "cis_controls_v8": [
+        {
+          "id": "3.3",
+          "name": "Configure Data Access Control Lists",
+          "description": "Configure data access control lists based on a user's need to know. Apply data access control lists, also known as access permissions, to local and remote file systems, databases, and applications.",
+          "asset_type": "Data",
+          "security_function": "Protect",
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        }
+      ],
+      "additional_information": ""
+    },
+    {
+      "id": "1.17",
+      "title": "Ensure a support role has been created to manage incidents with AWS Support",
+      "profile": "Level 1",
+      "description": "AWS provides a support center that can be used for incident notification and response, as well as technical support and customer services. Create an IAM Role to allow authorized users to manage incidents with AWS Support.",
+      "rationale": "By implementing least privilege for access control, an IAM Role will require an appropriate IAM Policy to allow Support Center Access in order to manage Incidents with AWS Support.",
+      "remediation_type": "Automated",
+      "audit_procedure": "From Console:\n\n1. Sign in to the AWS Management Console and open the IAM console at https://console.aws.amazon.com/iam/.\n2. In the left navigation pane, choose Roles.\n3. Ensure a role exists that has the 'AWSSupportAccess' policy attached.\n\nFrom Command Line:\n\n1. List IAM policies, filter for the 'AWSSupportAccess' managed policy, and note the 'Arn' element value:\n\naws iam list-policies --query \"Policies[?PolicyName == 'AWSSupportAccess']\"\n\n2. Check if the 'AWSSupportAccess' policy is attached to any role:\n\naws iam list-entities-for-policy --policy-arn arn:aws:iam::aws:policy/AWSSupportAccess\n\n3. In Output, Ensure PolicyRoles does not return empty. 'Example: Example: PolicyRoles: [ ]'\n\nIf it returns empty refer to the remediation below.",
+      "remediation_procedure": "From Console:\n\n1. Sign in to the AWS Management Console and open the IAM console at https://console.aws.amazon.com/iam/.\n2. In the navigation pane, choose Roles and then choose Create role.\n3. Choose Another AWS account.\n4. Enter the account ID to which you want to grant access to your resources and choose Next: Permissions.\n5. Select the check box next to the policy named AWSSupportAccess.\n6. Choose Next: Tags.\n7. (Optional) Enter any tags you wish to associate with this role.\n8. Choose Next: Review.\n9. Enter a name for the role and a description.\n10. Choose Create role.\n\nFrom Command Line:\n\n1. Create an IAM role for managing incidents with AWS:\n\n• Create a trust relationship policy document that allows <iam_user> to manage AWS incidents, and save it locally as /tmp/TrustPolicy.json:\n\n{\n  \"Version\": \"2012-10-17\",\n  \"Statement\": [\n    {\n      \"Effect\": \"Allow\",\n      \"Principal\": {\n        \"AWS\": \"<iam_user>\"\n      },\n      \"Action\": \"sts:AssumeRole\"\n    }\n  ]\n}\n\n2. Create the IAM role using the above trust policy:\n\naws iam create-role --role-name <aws_support_iam_role> --assume-role-policy-document file:///tmp/TrustPolicy.json\n\n3. Attach 'AWSSupportAccess' managed policy to the created IAM role:\n\naws iam attach-role-policy --policy-arn arn:aws:iam::aws:policy/AWSSupportAccess --role-name <aws_support_iam_role>",
+      "impact": "All AWS Support plans include an unlimited number of account and billing support cases, with no long-term contracts. Support billing calculations are performed on a per-account basis for all plans. Enterprise Support plan customers have the option to include multiple enabled accounts in an aggregated monthly billing calculation. Monthly charges for the Business and Enterprise support plans are based on each month's AWS usage charges, subject to a monthly minimum, billed in advance.\n\nWhen assigning rights, keep in mind that other policies may grant access to Support as well. This may include AdministratorAccess and other policies including customer managed policies. Utilizing the AWS managed 'AWSSupportAccess' role is one simple way of ensuring that this permission is properly granted.\n\nTo better support the principle of separation of duties, it would be best to only attach this role where necessary.",
+      "default_value": "",
+      "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies_managed-vs-inline.html",
+        "https://aws.amazon.com/premiumsupport/pricing/",
+        "https://docs.aws.amazon.com/cli/latest/reference/iam/list-policies.html",
+        "https://docs.aws.amazon.com/cli/latest/reference/iam/attach-role-policy.html",
+        "https://docs.aws.amazon.com/cli/latest/reference/iam/list-entities-for-policy.html"
+      ],
+      "cis_controls_v8": [
+        {
+          "id": "17.1",
+          "name": "Designate Personnel to Manage Incident Handling",
+          "description": "Designate one key person, and at least one backup, who will manage the enterprise's incident handling process. Management personnel are responsible for the coordination and documentation of incident response and recovery efforts and can consist of employees internal to the enterprise, third-party vendors, or a hybrid approach. If using a third-party vendor, designate at least one person internal to the enterprise to oversee any third-party work. Review annually, or when significant enterprise changes occur that could impact this Safeguard.",
+          "asset_type": "N/A",
+          "security_function": "Respond",
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        }
+      ],
+      "additional_information": "AWSSupportAccess policy is a global AWS resource. It has same ARN as arn:aws:iam::aws:policy/AWSSupportAccess for every account."
+    },
+    {
+      "id": "1.18",
+      "title": "Ensure IAM instance roles are used for AWS resource access from instances",
+      "description": "AWS access from within AWS instances can be done by either encoding AWS keys into AWS API calls or by assigning the instance to a role which has an appropriate permissions policy for the required access. \"AWS Access\" means accessing the APIs of AWS in order to access AWS resources or manage AWS account resources.",
+      "rationale": "AWS IAM roles reduce the risks associated with sharing and rotating credentials that can be used outside of AWS itself. If credentials are compromised, they can be used from outside of the AWS account they give access to. In contrast, in order to leverage role permissions an attacker would need to gain and maintain access to a specific instance to use the privileges associated with it.\n\nAdditionally, if credentials are encoded into compiled applications or other hard to change mechanisms, then they are even more unlikely to be properly rotated due to service disruption risks. As time goes on, credentials that cannot be rotated are more likely to be known by an increasing number of individuals who no longer work for the organization owning the credentials.",
+      "remediation_type": "Automated",
+      "profile_applicability": "Level 2",
+      "audit_procedure": "From Console:\n\n1. Sign in to the AWS Management Console and navigate to EC2 dashboard at https://console.aws.amazon.com/ec2/.\n2. In the left navigation panel, choose Instances.\n3. Select the EC2 instance you want to examine.\n4. Select Actions.\n5. Select View details.\n6. Select Security in the lower panel.\n• If the value for Instance profile arn is an instance profile ARN, then an instance profile (that contains an IAM role) is attached.\n• If the value for IAM Role is blank, no role is attached.\n• If the value for IAM Role contains a role\n• If the value for IAM Role is \"No roles attached to instance profile: <Instance-Profile-Name>\", then an instance profile is attached to the instance, but it does not contain an IAM role.\n7. Repeat steps 3 to 6 for each EC2 instance in your AWS account.\n\nFrom Command Line:\n\n1. Run the describe-instances command to list all EC2 instance IDs, available in the selected AWS region. The command output will return each instance ID:\n\naws ec2 describe-instances --region <region-name> --query 'Reservations[*].Instances[*].InstanceId'\n\n2. Run the describe-instances command again for each EC2 instance using the IamInstanceProfile identifier in the query filter to check if an IAM role is attached:\n\naws ec2 describe-instances --region <region-name> --instance-id <Instance-ID> --query 'Reservations[*].Instances[*].IamInstanceProfile'\n\n3. If an IAM role is attached, the command output will show the IAM instance profile ARN and ID.\n4. Repeat steps 1 to 3 for each EC2 instance in your AWS account.",
+      "remediation_procedure": "From Console:\n\n1. Sign in to the AWS Management Console and navigate to EC2 dashboard at https://console.aws.amazon.com/ec2/.\n2. In the left navigation panel, choose Instances.\n3. Select the EC2 instance you want to modify.\n4. Click Actions.\n5. Click Security.\n6. Click Modify IAM role.\n7. Click Create new IAM role if a new IAM role is required.\n8. Select the IAM role you want to attach to your instance in the IAM role dropdown.\n9. Click Update IAM role.\n10. Repeat steps 3 to 9 for each EC2 instance in your AWS account that requires an IAM role to be attached.\n\nFrom Command Line:\n\n1. Run the describe-instances command to list all EC2 instance IDs, available in the selected region:\n\naws ec2 describe-instances --region <region-name> --query 'Reservations[*].Instances[*].InstanceId'\n\n2. Run the associate-iam-instance-profile command to attach an instance profile (which is attached to an IAM role) to the EC2 instance:\n\naws ec2 associate-iam-instance-profile --region <region-name> --instance-id <Instance-ID> --iam-instance-profile Name=\"Instance-Profile-Name\"\n\n3. Run the describe-instances command again for the recently modified EC2 instance. The command output should return the instance profile ARN and ID:\n\naws ec2 describe-instances --region <region-name> --instance-id <Instance-ID> --query 'Reservations[*].Instances[*].IamInstanceProfile'\n\n4. Repeat steps 1 to 3 for each EC2 instance in your AWS account that requires an IAM role to be attached.",
+      "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html"
+      ],
+      "cis_controls_v8": [
+        {
+          "control_id": "6.8",
+          "control_name": "Define and Maintain Role-Based Access Control",
+          "control_description": "Define and maintain role-based access control, through determining and documenting the access rights necessary for each role within the enterprise to successfully carry out its assigned duties. Perform access control reviews of enterprise assets to validate that all privileges are authorized, on a recurring schedule at a minimum annually, or more frequently.",
+          "asset_type": "Users",
+          "security_function": "Protect",
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": false,
+            "FaaS": false
+          },
+          "implementation_groups": [
+            2,
+            3
+          ]
+        }
+      ],
+      "additional_information": "When using IAM roles for EC2 instances, ensure that the roles are configured with the principle of least privilege, granting only the permissions necessary for the instance to perform its intended functions."
+    },
+    {
+      "id": "1.19",
+      "title": "Ensure that all the expired SSL/TLS certificates stored in AWS IAM are removed",
+      "description": "To enable HTTPS connections to your website or application in AWS, you need an SSL/TLS server certificate. You can use ACM or IAM to store and deploy server certificates. Use IAM as a certificate manager only when you must support HTTPS connections in a region that is not supported by ACM. IAM securely encrypts your private keys and stores the encrypted version in IAM SSL certificate storage. IAM supports deploying server certificates in all regions, but you must obtain your certificate from an external provider for use with AWS. You cannot upload an ACM certificate to IAM. Additionally, you cannot manage your certificates from the IAM Console.",
+      "rationale": "Removing expired SSL/TLS certificates eliminates the risk that an invalid certificate will be deployed accidentally to a resource such as AWS Elastic Load Balancer (ELB), which can damage the credibility of the application/website behind the ELB. As a best practice, it is recommended to delete expired certificates.",
+      "remediation_type": "Automated",
+      "profile_applicability": "Level 1",
+      "audit_procedure": "From Console:\n\nGetting the certificates expiration information via AWS Management Console is not currently supported.\n\nTo request information about the SSL/TLS certificates stored in IAM via the AWS API use the Command Line Interface (CLI).\n\nFrom Command Line:\n\nRun list-server-certificates command to list all the IAM-stored server certificates:\n\naws iam list-server-certificates\n\nThe command output should return an array that contains all the SSL/TLS certificates currently stored in IAM and their metadata (name, ID, expiration date, etc):\n\n{\n    \"ServerCertificateMetadataList\": [\n        {\n            \"ServerCertificateId\": \"EHDGFRW7EJFYTE88D\",\n            \"ServerCertificateName\": \"MyServerCertificate\",\n            \"Expiration\": \"2018-07-10T23:59:59Z\",\n            \"Path\": \"/\",\n            \"Arn\": \"arn:aws:iam::012345678910:server-certificate/MySSLCertificate\",\n            \"UploadDate\": \"2018-06-10T11:56:08Z\"\n        }\n    ]\n}\n\nVerify the ServerCertificateName and Expiration parameter value (expiration date) for each SSL/TLS certificate returned by the list-server-certificates command and determine if there are any expired server certificates currently stored in AWS IAM. If so, use the AWS API to remove them.\n\nIf this command returns:\n\n{ { \"ServerCertificateMetadataList\": [] }\n\nThis means that there are no expired certificates, It DOES NOT mean that no certificates exist.",
+      "remediation_procedure": "From Console:\n\nRemoving expired certificates via AWS Management Console is not currently supported. To delete SSL/TLS certificates stored in IAM via the AWS API use the Command Line Interface (CLI).\n\nFrom Command Line:\n\nTo delete Expired Certificate run following command by replacing <CERTIFICATE_NAME> with the name of the certificate to delete:\n\naws iam delete-server-certificate --server-certificate-name <CERTIFICATE_NAME>\n\nWhen the preceding command is successful, it does not return any output.",
+      "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_server-certs.html",
+        "https://docs.aws.amazon.com/cli/latest/reference/iam/delete-server-certificate.html"
+      ],
+      "cis_controls_v8": [
+        {
+          "control_id": "3.1",
+          "control_name": "Establish and Maintain a Data Management Process",
+          "control_description": "Establish and maintain a data management process. In the process, address data sensitivity, data owner, handling of data, data retention limits, and disposal requirements, based on sensitivity and retention standards for the enterprise. Review and update documentation annually, or when significant enterprise changes occur that could impact this Safeguard.",
+          "asset_type": "Data",
+          "security_function": "Protect",
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": false,
+            "FaaS": false
+          },
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "additional_information": "Deleting expired certificates is an important security practice, but be cautious when removing certificates to ensure that no active services are using them. Always verify the expiration date and usage of a certificate before deletion."
+    },
+    {
+      "id": "1.20",
+      "title": "Ensure that IAM Access analyzer is enabled for all regions",
+      "profile": "Level 1",
+      "description": "Enable IAM Access analyzer for IAM policies about all resources in each active AWS region.",
+      "rationale": "AWS IAM Access Analyzer helps you identify the resources in your organization and accounts, such as Amazon S3 buckets or IAM roles, that are shared with an external entity. This lets you identify unintended access to your resources and data. Access Analyzer identifies resources that are shared with external principals by using logic-based reasoning to analyze the resource-based policies in your AWS environment. IAM Access Analyzer continuously monitors all policies for S3 bucket, IAM roles, KMS (Key Management Service) keys, AWS Lambda functions, and Amazon SQS(Simple Queue Service) queues.",
+      "remediation_type": "Automated",
+      "audit_procedure": "From Console:\n1. Open the IAM console at https://console.aws.amazon.com/iam/\n2. Choose Access analyzer\n3. Click 'Analyzers'\n4. Ensure that at least one analyzer is present\n5. Ensure that the STATUS is set to Active\n6. Repeat these step for each active region\n\nFrom Command Line:\n1. Run the following command:\naws accessanalyzer list-analyzers | grep status\n2. Ensure that at least one Analyzer the status is set to ACTIVE\n3. Repeat the steps above for each active region.",
+      "remediation_procedure": "From Console:\nPerform the following to enable IAM Access analyzer for IAM policies:\n1. Open the IAM console at https://console.aws.amazon.com/iam/.\n2. Choose Access analyzer.\n3. Choose Create analyzer.\n4. On the Create analyzer page, confirm that the Region displayed is the Region where you want to enable Access Analyzer.\n5. Enter a name for the analyzer. Optional as it will generate a name for you automatically.\n6. Add any tags that you want to apply to the analyzer. Optional.\n7. Choose Create Analyzer.\n8. Repeat these step for each active region\n\nFrom Command Line:\nRun the following command:\naws accessanalyzer create-analyzer --analyzer-name <NAME> --type <ACCOUNT|ORGANIZATION>\nRepeat this command above for each active region.",
+      "impact": "",
+      "default_value": "",
+      "references": [
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/what-is-access-analyzer.html",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/access-analyzer-getting-started.html",
+        "https://docs.aws.amazon.com/cli/latest/reference/accessanalyzer/get-analyzer.html",
+        "https://docs.aws.amazon.com/cli/latest/reference/accessanalyzer/create-analyzer.html"
+      ],
+      "cis_controls_v8": [
+        {
+          "id": "3.3",
+          "name": "Configure Data Access Control Lists",
+          "description": "Configure data access control lists based on a user's need to know. Apply data access control lists, also known as access permissions, to local and remote file systems, databases, and applications.",
+          "asset_type": "Data",
+          "security_function": "Protect",
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        }
+      ],
+      "additional_information": "Some regions in AWS are enabled by default and some are disabled by default. Regions introduced prior to March 20, 2019 are enabled by default and cannot be disabled. Regions introduced after can be disabled by default. For more information on managing AWS Regions, please see AWS's documentation on managing AWS Regions."
+    },
+    {
+      "id": "1.21",
+      "title": "Ensure IAM users are managed centrally via identity federation or AWS Organizations for multi-account environments",
+      "profile": "Level 2",
+      "description": "In multi-account environments, IAM user centralization facilitates greater user control. User access beyond the initial account is then provided via role assumption.",
+      "rationale": "Centralizing IAM user management to a single identity store reduces complexity and thus the likelihood of access management errors.",
+      "remediation_type": "Manual",
+      "audit_procedure": "For multi-account AWS environments with an external identity provider:\n1. Determine the master account for identity federation or IAM user management\n2. Login to that account through the AWS Management Console\n3. Click Services\n4. Click IAM\n5. Click Identity providers\n6. Verify the configuration\n\nThen, determine all accounts that should not have local users present. For each account:\n1. Determine all accounts that should not have local users present\n2. Log into the AWS Management Console\n3. Switch role into each identified account\n4. Click Services\n5. Click IAM\n6. Click Users\n7. Confirm that no IAM users representing individuals are present\n\nFor multi-account AWS environments implementing AWS Organizations without an external identity provider:\n1. Determine all accounts that should not have local users present\n2. Log into the AWS Management Console\n3. Switch role into each identified account\n4. Click Services\n5. Click IAM\n6. Click Users\n7. Confirm that no IAM users representing individuals are present",
+      "remediation_procedure": "The remediation procedure will vary based on the individual organization's implementation of identity federation and/or AWS Organizations with the acceptance criteria that no non-service IAM users, and non-root accounts, are present outside the account providing centralized IAM user management.",
+      "impact": "",
+      "default_value": "",
+      "references": [],
+      "cis_controls_v8": [
+        {
+          "id": "5.6",
+          "name": "Centralize Account Management",
+          "description": "Centralize account management through a directory or identity service.",
+          "asset_type": "Users",
+          "security_function": "Protect",
+          "implementation_groups": [
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        }
+      ],
+      "additional_information": ""
+    },
+    {
+      "id": "1.22",
+      "title": "Ensure access to AWSCloudShellFullAccess is restricted",
+      "profile": "Level 1",
+      "description": "AWS CloudShell is a convenient way of running CLI commands against AWS services; a managed IAM policy ('AWSCloudShellFullAccess') provides full access to CloudShell, which allows file upload and download capability between a user's local system and the CloudShell environment. Within the CloudShell environment a user has sudo permissions, and can access the internet. So it is feasible to install file transfer software (for example) and move data from CloudShell to external internet servers.",
+      "rationale": "Access to this policy should be restricted as it presents a potential channel for data exfiltration by malicious cloud admins that are given full permissions to the service. AWS documentation describes how to create a more restrictive IAM policy which denies file transfer permissions.",
+      "remediation_type": "Manual",
+      "audit_procedure": "From Console\n1. Open the IAM console at https://console.aws.amazon.com/iam/\n2. In the left pane, select Policies\n3. Search for and select AWSCloudShellFullAccess\n4. On the Entities attached tab, ensure that there are no entities using this policy\n\nFrom Command Line\n1. List IAM policies, filter for the 'AWSCloudShellFullAccess' managed policy, and note the \"Arn\" element value:\naws iam list-policies --query \"Policies[?PolicyName == 'AWSCloudShellFullAccess']\"\n2. Check if the 'AWSCloudShellFullAccess' policy is attached to any role:\naws iam list-entities-for-policy --policy-arn arn:aws:iam::aws:policy/AWSCloudShellFullAccess\n3. In Output, Ensure PolicyRoles returns empty. 'Example: Example: PolicyRoles: [ ]'\n\nIf it does not return empty refer to the remediation below.\n\nNote: Keep in mind that other policies may grant access.",
+      "remediation_procedure": "From Console\n1. Open the IAM console at https://console.aws.amazon.com/iam/\n2. In the left pane, select Policies\n3. Search for and select AWSCloudShellFullAccess\n4. On the Entities attached tab, for each item, check the box and select Detach",
+      "impact": "",
+      "default_value": "",
+      "references": [
+        "https://docs.aws.amazon.com/cloudshell/latest/userguide/sec-auth-with-identities.html"
+      ],
+      "cis_controls_v8": [
+        {
+          "id": "6",
+          "name": "Access Management Control",
+          "description": "Use processes and tools to create, assign, manage, and revoke access credentials and privileges for user, administrator, and service accounts for enterprise assets and software.",
+          "asset_type": "N/A",
+          "security_function": "",
+          "implementation_groups": [],
+          "applicability_of_service_model": {}
+        }
+      ],
+      "additional_information": ""
+    },
+    {
+      "id": "2.1.1",
+      "title": "Ensure S3 Bucket Policy is Set to Deny HTTP Requests",
+      "description": "At the Amazon S3 bucket level, you can configure permissions through a bucket policy to make the objects accessible only through HTTPS.",
+      "rationale": "By default, Amazon S3 allows both HTTP and HTTPS requests. To ensure objects are accessed only through HTTPS, you must explicitly deny HTTP requests using a bucket policy. Bucket policies that allow HTTPS requests without explicitly denying HTTP requests will not comply with this recommendation.",
+      "remediation_type": "Automated",
+      "profile_applicability": "Level 2",
+      "audit_procedure": "To allow only HTTPS access, use a condition that checks for the key `aws:SecureTransport: true`. This ensures requests are sent through HTTPS, but HTTP can still be used if not explicitly denied. Verify there is a bucket policy that explicitly denies HTTP requests by checking for the key `aws:SecureTransport: false`.\n\nFrom Console:\n1. Log in to the AWS Management Console and open the Amazon S3 console at https://console.aws.amazon.com/s3/.\n2. Select the checkbox next to the bucket.\n3. Click 'Permissions', then click 'Bucket Policy'.\n4. Ensure a policy exists that includes the following statement:\n   ```json\n   {\n     \"Sid\": \"<optional>\",\n     \"Effect\": \"Deny\",\n     \"Principal\": \"*\",\n     \"Action\": \"s3:*\",\n     \"Resource\": \"arn:aws:s3:::<bucket_name>/*\",\n     \"Condition\": {\n       \"Bool\": {\n         \"aws:SecureTransport\": \"false\"\n       }\n     }\n   }\n   ```\n   Replace `<optional>` and `<bucket_name>` with appropriate values.\n5. Repeat for all buckets in your AWS account.\n\nFrom Command Line:\n1. List all S3 buckets:\n   ```bash\n   aws s3 ls\n   ```\n2. For each bucket, retrieve its policy:\n   ```bash\n   aws s3api get-bucket-policy --bucket <bucket_name>\n   ```\n3. Confirm the policy contains the key `aws:SecureTransport: false` and an `Effect: Deny` statement.",
+      "remediation_procedure": "From Console:\n1. Log in to the AWS Management Console and open the Amazon S3 console at https://console.aws.amazon.com/s3/.\n2. Select the checkbox next to the bucket.\n3. Click 'Permissions'.\n4. Click 'Bucket Policy'.\n5. Add the following statement to the existing policy:\n   ```json\n   {\n     \"Sid\": \"<optional>\",\n     \"Effect\": \"Deny\",\n     \"Principal\": \"*\",\n     \"Action\": \"s3:*\",\n     \"Resource\": \"arn:aws:s3:::<bucket_name>/*\",\n     \"Condition\": {\n       \"Bool\": {\n         \"aws:SecureTransport\": \"false\"\n       }\n     }\n   }\n   ```\n   Replace `<optional>` and `<bucket_name>` with appropriate values.\n6. Save the policy.\n7. Repeat for all relevant buckets.\n\nFrom Command Line:\n1. Export the bucket policy to a JSON file:\n   ```bash\n   aws s3api get-bucket-policy --bucket <bucket_name> --query Policy --output text > policy.json\n   ```\n2. Edit the `policy.json` file to add the following statement:\n   ```json\n   {\n     \"Sid\": \"<optional>\",\n     \"Effect\": \"Deny\",\n     \"Principal\": \"*\",\n     \"Action\": \"s3:*\",\n     \"Resource\": \"arn:aws:s3:::<bucket_name>/*\",\n     \"Condition\": {\n       \"Bool\": {\n         \"aws:SecureTransport\": \"false\"\n       }\n     }\n   }\n   ```\n   Replace `<optional>` and `<bucket_name>` with appropriate values.\n3. Apply the modified policy back to the bucket:\n   ```bash\n   aws s3api put-bucket-policy --bucket <bucket_name> --policy file://policy.json\n   ```",
+      "impact": "Explicitly denying HTTP access ensures secure transmission of data to and from S3 buckets, mitigating the risk of data interception.",
+      "references": [
+        "https://aws.amazon.com/premiumsupport/knowledge-center/s3-bucket-policy-for-config-rule/",
+        "https://aws.amazon.com/blogs/security/how-to-use-bucket-policies-and-apply-defense-in-depth-to-help-secure-your-amazon-s3-data/",
+        "https://awscli.amazonaws.com/v2/documentation/api/latest/reference/s3api/get-bucket-policy.html"
+      ],
+      "cis_controls_v8": [
+        {
+          "control_id": "3.10",
+          "control_name": "Encrypt Sensitive Data in Transit",
+          "control_description": "Encrypt sensitive data in transit. Example implementations include Transport Layer Security (TLS) and Open Secure Shell (OpenSSH).",
+          "asset_type": "Data",
+          "security_function": "Protect",
+          "implementation_groups": [2, 3],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        }
+      ],
+      "additional_information": "When implementing HTTPS-only access for S3 buckets, ensure all applications and services accessing the bucket are configured to use HTTPS endpoints."
+    },
+    {
+      "id": "2.1.2",
+      "title": "Ensure MFA Delete is enabled on S3 buckets",
+      "description": "Once MFA Delete is enabled on your sensitive and classified S3 bucket it requires the user to have two forms of authentication.",
+      "rationale": "Adding MFA delete to an S3 bucket, requires additional authentication when you change the version state of your bucket or you delete and object version adding another layer of security in the event your security credentials are compromised or unauthorized access is granted.",
+      "remediation_type": "Manual",
+      "profile_applicability": "Level 2",
+      "audit_procedure": "Perform the steps below to confirm MFA delete is configured on an S3 Bucket\n\nFrom Console:\n1. Login to the S3 console at https://console.aws.amazon.com/s3/\n2. Click the Check box next to the Bucket name you want to confirm\n3. In the window under Properties\n4. Confirm that Versioning is Enabled\n5. Confirm that MFA Delete is Enabled\n\nFrom Command Line:\n1. Run the get-bucket-versioning\naws s3api get-bucket-versioning --bucket my-bucket\n\nOutput example:\n<VersioningConfiguration xmlns='http: //s3.amazonaws.com/doc/2006-03-01/\">\n<Status>Enabled</Status>\n<MfaDelete>Enabled</MfaDelete>\n</VersioningConfiguration>\n\nIf the Console or the CLI output does not show Versioning and MFA Delete enabled refer to the remediation below.",
+      "remediation_procedure": "Perform the steps below to enable MFA delete on an S3 bucket.\n\nNote:\n-You cannot enable MFA Delete using the AWS Management Console. You must use the AWS CLI or API.\n-You must use your 'root' account to enable MFA Delete on S3 buckets.\n\nFrom Command line:\n1. Run the s3api put-bucket-versioning command\naws s3api put-bucket-versioning --profile my-root-profile --bucket Bucket_Name --versioning-configuration Status=Enabled,MFADelete=Enabled --mfa 'arn:aws:iam: :aws_account_id:mfa/root-account-mfa-device passcode'",
+      "impact": "Enabling MFA delete on an S3 bucket could required additional administrator oversight. Enabling MFA delete may impact other services that automate the creation and/or deletion of S3 buckets.",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html#MultiFactorAuthenticationDelete",
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingMFADelete.html",
+        "https://aws.amazon.com/blogs/security/securing-access-to-aws-using-mfa-part-3/",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa_lost-or-broken.html"
+      ],
+      "cis_controls_v8": [
+        {
+          "control_id": "3.3",
+          "control_name": "Configure Data Access Control Lists",
+          "control_description": "Configure data access control lists based on a user's need to know. Apply data access control lists, also known as access permissions, to local and remote file systems, databases, and applications.",
+          "asset_type": "Data",
+          "security_function": "Protect",
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        },
+        {
+          "control_id": "6.5",
+          "control_name": "Require MFA for Administrative Access",
+          "control_description": "Require MFA for all administrative access accounts, where supported, on all enterprise assets, whether managed on-site or through a third-party provider.",
+          "asset_type": "Users",
+          "security_function": "Protect",
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        }
+      ],
+      "additional_information": "When implementing MFA Delete on S3 buckets, consider the impact on automated processes and ensure proper planning for administrative access requirements."
+    },
+    {
+      "id": "2.1.3",
+      "title": "Ensure all data in Amazon S3 has been discovered, classified and secured when required",
+      "description": "Amazon S3 buckets can contain sensitive data, that for security purposes should be discovered, monitored, classified and protected. Macie along with other 3rd party tools can automatically provide an inventory of Amazon S3 buckets.",
+      "rationale": "Using a Cloud service or 3rd Party software to continuously monitor and automate the process of data discovery and classification for S3 buckets using machine learning and pattern matching is a strong defense in protecting that information. Amazon Macie is a fully managed data security and data privacy service that uses machine learning and pattern matching to discover and protect your sensitive data in AWS.",
+      "remediation_type": "Manual",
+      "profile_applicability": "Level 2",
+      "audit_procedure": "Perform the following steps to determine if Macie is running:\n\nFrom Console:\n1. Login to the Macie console at https://console.aws.amazon.com/macie/\n2. In the left hand pane click on By job under findings.\n3. Confirm that you have a Job setup for your S3 Buckets\n\nWhen you log into the Macie console if you aren't taken to the summary page and you don't have a job setup and running then refer to the remediation procedure below. If you are using a 3rd Party tool to manage and protect your s3 data you meet this recommendation.",
+      "remediation_procedure": "Perform the steps below to enable and configure Amazon Macie\n\nFrom Console:\n1. Log on to the Macie console at https://console.aws.amazon.com/macie/\n2. Click Get started.\n3. Click Enable Macie.\n\nSetup a repository for sensitive data discovery results\n1. In the Left pane, under Settings, click Discovery results.\n2. Make sure Create bucket is selected.\n3. Create a bucket, enter a name for the bucket. The name must be unique across all S3 buckets. In addition, the name must start with a lowercase letter or a number.\n4. Click on Advanced.\n5. Block all public access, make sure Yes is selected.\n6. KMS encryption, specify the AWS KMS key that you want to use to encrypt the results. The key must be a symmetric, customer master key (CMK) that's in the same Region as the S3 bucket.\n7. Click on Save\n\nCreate a job to discover sensitive data\n1. In the left pane, click S3 buckets. Macie displays a list of all the S3 buckets for your account.\n2. Select the check box for each bucket that you want Macie to analyze as part of the job\n3. Click Create job.\n4. Click Quick create.\n5. For the Name and description step, enter a name and, optionally, a description of the job.\n6. Then click Next.\n7. For the Review and create step, click Submit.\n\nReview your findings\n1. In the left pane, click Findings.\n2. To view the details of a specific finding, choose any field other than the check box for the finding.\n\nIf you are using a 3rd Party tool to manage and protect your s3 data, follow the Vendor documentation for implementing and configuring that tool.",
+      "impact": "There is a cost associated with using Amazon Macie. There is also typically a cost associated with 3rd Party tools that perform similar processes and protection.",
+      "references": [
+        "https://aws.amazon.com/macie/getting-started/",
+        "https://docs.aws.amazon.com/workspaces/latest/adminguide/data-protection.html",
+        "https://docs.aws.amazon.com/macie/latest/user/data-classification.html"
+      ],
+      "cis_controls_v8": [
+        {
+          "control_id": "3.1",
+          "control_name": "Establish and Maintain a Data Management Process",
+          "control_description": "Establish and maintain a data management process. In the process, address data sensitivity, data owner, handling of data, data retention limits, and disposal requirements, based on sensitivity and retention standards for the enterprise. Review and update documentation annually, or when significant enterprise changes occur that could impact this Safeguard.",
+          "asset_type": "Data",
+          "security_function": "Identify",
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        },
+        {
+          "control_id": "3.11",
+          "control_name": "Encrypt Sensitive Data at Rest",
+          "control_description": "Encrypt sensitive data at rest on servers, applications, and databases containing sensitive data. Storage-layer encryption, also known as server-side encryption, meets the minimum requirement of this Safeguard. Additional encryption methods may include application-layer encryption, also known as client-side encryption, where access to the data storage device(s) does not permit access to the plain-text data.",
+          "asset_type": "Data",
+          "security_function": "Protect",
+          "implementation_groups": [
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        }
+      ],
+      "additional_information": "When implementing data discovery and classification, consider the potential impact on performance and costs. Regularly review and update your classification policies to ensure they remain effective and aligned with your organization's security requirements."
+    },
+    {
+      "id": "2.1.4",
+      "title": "Ensure that S3 Buckets are configured with 'Block public access (bucket settings)'",
+      "description": "Amazon S3 provides Block Public Access settings to manage public access to S3 buckets. These settings can be applied at the account level or at the individual bucket level. Turning on S3 Block Public Access at the account level ensures that any new buckets created have all four S3 Block Public Access settings enabled by default. Blocking public access to S3 buckets reduces data leakage risks.",
+      "rationale": "Enabling 'Block public access (bucket settings)' on S3 buckets reduces the risk of unintended public exposure of data stored in S3 buckets. This setting provides an additional layer of protection against misconfiguration of bucket policies or ACLs that might accidentally allow public access.",
+      "remediation_type": "Automated",
+      "profile_applicability": "Level 1",
+      "audit_procedure": "To verify that 'Block public access (bucket settings)' is enabled for S3 buckets:\n1. Sign in to the AWS Management Console and open the Amazon S3 console.\n2. Select the bucket you want to examine.\n3. Click on the 'Permissions' tab.\n4. Scroll down to the 'Block public access (bucket settings)' section.\n5. Verify that all four options are set to 'On':\n   - Block all public access\n   - Block public access to buckets and objects granted through new access control lists (ACLs)\n   - Block public access to buckets and objects granted through any access control lists (ACLs)\n   - Block public access to buckets and objects granted through new public bucket or access point policies\n   - Block public and cross-account access to buckets and objects through any public bucket or access point policies",
+      "remediation_procedure": "To enable 'Block public access (bucket settings)' for an S3 bucket:\n1. Sign in to the AWS Management Console and open the Amazon S3 console.\n2. Select the bucket you want to configure.\n3. Click on the 'Permissions' tab.\n4. Scroll down to the 'Block public access (bucket settings)' section.\n5. Click 'Edit'.\n6. Select 'Block all public access'.\n7. Click 'Save changes'.\n8. When prompted, type 'confirm' to confirm the changes.\n9. Click 'Confirm' to save your changes.",
+      "impact": "Enabling 'Block public access (bucket settings)' may impact existing applications or workflows that rely on public access to S3 buckets. Before implementing this control, carefully review and test the potential impact on your applications and processes.",
+      "references": [
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/access-control-block-public-access.html",
+        "https://aws.amazon.com/blogs/aws/amazon-s3-block-public-access-another-layer-of-protection-for-your-accounts-and-buckets/"
+      ],
+      "cis_controls_v8": [
+        {
+          "control_id": "3.3",
+          "control_name": "Configure Data Access Control Lists",
+          "control_description": "Configure data access control lists based on a user's need to know. Apply data access control lists, also known as access permissions, to local and remote file systems, databases, and applications.",
+          "asset_type": "Data",
+          "security_function": "Protect",
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": false,
+            "SaaS": false,
+            "FaaS": false
+          }
+        }
+      ],
+      "additional_information": "Regularly review and audit S3 bucket permissions and public access settings to ensure they align with your organization's security policies. Consider using AWS Config rules or third-party tools to continuously monitor and alert on any changes to S3 bucket public access settings."
+    },
+    {
+      "id": "3.3",
+      "title": "Ensure the S3 bucket used to store CloudTrail logs is not publicly accessible",
+      "description": "CloudTrail logs a record of every API call made in your AWS account. These logs file are stored in an S3 bucket. It is recommended that the bucket policy or access control list (ACL) applied to the S3 bucket that CloudTrail logs to prevent public access to the CloudTrail logs.",
+      "rationale": "Allowing public access to CloudTrail log content may aid an adversary in identifying weaknesses in the affected account's use or configuration.",
+      "remediation_type": "Automated",
+      "profile_applicability": "Level 1",
+      "audit_procedure": "From Console:\n1. Go to the Amazon CloudTrail console at https://console.aws.amazon.com/cloudtrail/home.\n2. In the API activity history pane on the left, click Trails.\n3. In the Trails pane, note the bucket names in the S3 bucket column\n4. Go to Amazon S3 console at https://console.aws.amazon.com/s3/home.\n5. For each bucket noted in step 3, right-click on the bucket and click Properties.\n6. In the Properties pane, click the Permissions tab.\n7. The tab shows a list of grants, one row per grant, in the bucket ACL. Each row identifies the grantee and the permissions granted.\n8. Ensure no rows exists that have the Grantee set to Everyone or the Grantee set to Any Authenticated User.\n9. If the Edit bucket policy button is present, click it to review the bucket policy.\n10. Ensure the policy does not contain a Statement having an Effect set to Allow and a Principal set to \"*\" or {\"AWS\": \"*\"}, or if it does, ensure that it has a condition in place to restrict access, such as aws:PrincipalOrgID.\n\nFrom Command Line:\n1. Get the name of the S3 bucket that CloudTrail is logging to:\naws cloudtrail describe-trails --query 'trailList[*].S3BucketName'\n2. Ensure the AllUsers principal is not granted privileges to that <bucket>:\naws s3api get-bucket-acl --bucket <s3_bucket_for_cloudtrail> --query 'Grants[?Grantee.URI== `https://acs.amazonaws.com/groups/global/AllUsers` ]'\n3. Ensure the AuthenticatedUsers principal is not granted privileges to that <bucket>:\naws s3api get-bucket-acl --bucket <s3_bucket_for_cloudtrail> --query 'Grants[?Grantee.URI== `https://acs.amazonaws.com/groups/global/AuthenticatedUsers`]'\n4. Get the S3 Bucket Policy:\naws s3api get-bucket-policy --bucket <s3_bucket_for_cloudtrail>\n5. Ensure the policy does not contain a Statement having an Effect set to Allow and a Principal set to \"*\" or {\"AWS\": \"*\"}. Additionally, check to see whether a condition has been added to the bucket policy covering aws:PrincipalOrgID, as having this (in the StringEquals or StringEqualsIgnoreCase) would restrict access to only the named Org ID.",
+      "remediation_procedure": "1. Go to Amazon S3 console at https://console.aws.amazon.com/s3/home.\n2. Right-click on the bucket and click Properties\n3. In the Properties pane, click the Permissions tab.\n4. The tab shows a list of grants, one row per grant, in the bucket ACL. Each row identifies the grantee and the permissions granted.\n5. Select the row that grants permission to Everyone or Any Authenticated User.\n6. Uncheck all the permissions granted to Everyone or Any Authenticated User (click x to delete the row).\n7. Click Save to save the ACL.\n8. If the Edit bucket policy button is present, click it.\n9. Remove any Statement having an Effect set to Allow and a Principal set to \"*\" or {\"AWS\": \"*\"}, that doesn't also have a condition to restrict access, such as aws:PrincipalOrgID.",
+      "default_value": "By default, S3 buckets are not publicly accessible.",
+      "references": [
+        "CCE-78915-6",
+        "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html"
+      ],
+      "cis_controls_v8": [
+        {
+          "control_id": "3.3",
+          "control_name": "Configure Data Access Control Lists",
+          "control_description": "Configure data access control lists based on a user's need to know. Apply data access control lists, also known as access permissions, to local and remote file systems, databases, and applications.",
+          "asset_type": "Data",
+          "security_function": "Protect",
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": false,
+            "SaaS": false,
+            "FaaS": false
+          }
+        }
+      ],
+      "additional_information": "Note: Principal set to \"*\" or {\"AWS\": \"*\"}, without any conditions, allows anonymous access."
+    },
+    {
+      "id": "3.6",
+      "title": "Ensure S3 bucket access logging is enabled on the CloudTrail S3 bucket",
+      "description": "S3 Bucket Access Logging generates a log that contains access records for each request made to your S3 bucket. An access log record contains details about the request, such as the request type, the resources specified in the request worked, and the time and date the request was processed. It is recommended that bucket access logging be enabled on the CloudTrail S3 bucket.",
+      "rationale": "By enabling S3 bucket logging on target S3 buckets, it is possible to capture all events which may affect objects within any target buckets. Configuring logs to be placed in a separate bucket allows access to log information which can be useful in security and incident response workflows.",
+      "remediation_type": "Automated",
+      "profile_applicability": "Level 1",
+      "audit_procedure": "From Console:\n1. Go to the Amazon CloudTrail console at https://console.aws.amazon.com/cloudtrail/home\n2. In the API activity history pane on the left, click Trails\n3. In the Trails pane, note the bucket names in the S3 bucket column\n4. Sign in to the AWS Management Console and open the S3 console at https://console.aws.amazon.com/s3.\n5. Under All Buckets click on a target S3 bucket\n6. Click on Properties in the top right of the console\n7. Under Bucket: <bucket_name> click on Logging\n8. Ensure Enabled is checked.\n\nFrom Command Line:\n1. Get the name of the S3 bucket that CloudTrail is logging to:\naws cloudtrail describe-trails --query 'trailList[*].S3BucketName'\n2. Ensure Bucket Logging is enabled:\naws s3api get-bucket-logging --bucket <s3_bucket_for_cloudtrail>\nEnsure command does not returns empty output. Sample Output for a bucket with logging enabled:\n{\n  \"LoggingEnabled\": {\n    \"TargetPrefix\": \"<Prefix_Test>\",\n    \"TargetBucket\": \"<Bucket_name_for_Storing_Logs>\"\n  }\n}",
+      "remediation_procedure": "From Console:\n1. Sign in to the AWS Management Console and open the S3 console at https://console.aws.amazon.com/s3.\n2. Under All Buckets click on the target S3 bucket\n3. Click on Properties in the top right of the console\n4. Under Bucket: <s3_bucket_for_cloudtrail> click on Logging\n5. Configure bucket logging\n   o Click on the Enabled checkbox\n   o Select Target Bucket from list\n   o Enter a Target Prefix\n6. Click Save.\n\nFrom Command Line:\n1. Get the name of the S3 bucket that CloudTrail is logging to:\naws cloudtrail describe-trails --region <region-name> --query trailList[*].S3BucketName\n2. Copy and add target bucket name at <Logging_BucketName>, Prefix for logfile at <LogFilePrefix> and optionally add an email address in the following template and save it as <FileName.Json>:\n{\n  \"LoggingEnabled\": {\n    \"TargetBucket\": \"<Logging_BucketName>\",\n    \"TargetPrefix\": \"<LogFilePrefix>\",\n    \"TargetGrants\": [\n      {\n        \"Grantee\": {\n          \"Type\": \"AmazonCustomerByEmail\",\n          \"EmailAddress\": \"<EmailID>\"\n        },\n        \"Permission\": \"FULL_CONTROL\"\n      }\n    ]\n  }\n}\n3. Run the put-bucket-logging command with bucket name and <FileName.Json> as input, for more information refer at put-bucket-logging:\naws s3api put-bucket-logging --bucket <BucketName> --bucket-logging-status file://<FileName.Json>",
+      "default_value": "Logging is disabled.",
+      "references": [
+        "CCE-78918-0",
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html"
+      ],
+      "cis_controls_v8": [
+        {
+          "control_id": "3.14",
+          "control_name": "Log Sensitive Data Access",
+          "control_description": "Log sensitive data access, including modification and disposal.",
+          "asset_type": "Data",
+          "security_function": "Detect",
+          "implementation_groups": [
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": false,
+            "SaaS": false,
+            "FaaS": false
+          }
+        },
+        {
+          "control_id": "8.2",
+          "control_name": "Collect Audit Logs",
+          "control_description": "Collect audit logs. Ensure that logging, per the enterprise's audit log management process, has been enabled across enterprise assets.",
+          "asset_type": "Network",
+          "security_function": "Detect",
+          "implementation_groups": [
+            1,
+            2,
+            3
+          ],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "3.9",
+      "title": "Ensure VPC flow logging is enabled in all VPCs",
+      "description": "VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC. After you've created a flow log, you can view and retrieve its data in Amazon CloudWatch Logs. It is recommended that VPC Flow Logs be enabled for packet \"Rejects\" for VPCs.",
+      "rationale": "VPC Flow Logs provide visibility into network traffic that traverses the VPC and can be used to detect anomalous traffic or insight during security workflows.",
+      "remediation_type": "Automated",
+      "profile_applicability": "Level 2",
+      "impact": "By default, CloudWatch Logs will store Logs indefinitely unless a specific retention period is defined for the log group. When choosing the number of days to retain, keep in mind the average days it takes an organization to realize they have been breached is 210 days (at the time of this writing). Since additional time is required to research a breach, a minimum 365 day retention policy allows time for detection and research. You may also wish to archive the logs to a cheaper storage service rather than simply deleting them.",
+      "audit_procedure": "From Console:\n1. Sign into the management console\n2. Select Services then VPC\n3. In the left navigation pane, select Your VPCs\n4. Select a VPC\n5. In the right pane, select the Flow Logs tab.\n6. Ensure a Log Flow exists that has Active in the Status column.\n\nFrom Command Line:\n1. Run describe-vpcs command to list the VPC networks available in the current AWS region\n2. Run describe-flow-logs command using the VPC ID to determine if the selected virtual network has the Flow Logs feature enabled\n3. Repeat for all VPCs in all regions",
+      "remediation_procedure": "From Console:\n1. Sign into the management console\n2. Select Services then VPC\n3. In the left navigation pane, select Your VPCs\n4. Select a VPC\n5. In the right pane, select the Flow Logs tab.\n6. If no Flow Log exists, click Create Flow Log\n7. For Filter, select Reject\n8. Enter in a Role and Destination Log Group\n9. Click Create Log Flow\n10. Click on CloudWatch Logs Group\n\nFrom Command Line:\n1. Create necessary IAM roles and policies\n2. Use the create-flow-logs command to enable flow logs for each VPC",
+      "default_value": "By default, VPC flow logging is not enabled.",
+      "references": [
+        "CCE-79202-8",
+        "https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/flow-logs.html"
+      ],
+      "cis_controls_v8": [
+        {
+          "control_id": "8.2",
+          "control_name": "Collect Audit Logs",
+          "control_description": "Collect audit logs. Ensure that logging, per the enterprise's audit log management process, has been enabled across enterprise assets.",
+          "asset_type": "Network",
+          "security_function": "Detect",
+          "implementation_groups": [1, 2, 3],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": true,
+            "SaaS": true,
+            "FaaS": true
+          }
+        },
+        {
+          "control_id": "13.6",
+          "control_name": "Collect Network Traffic Flow Logs",
+          "control_description": "Collect network traffic flow logs and/or network traffic to review and alert upon from network devices.",
+          "asset_type": "Network",
+          "security_function": "Detect",
+          "implementation_groups": [2, 3],
+          "applicability_of_service_model": {
+            "IaaS": true,
+            "PaaS": false,
+            "SaaS": false,
+            "FaaS": false
+          }
+        }
+      ],
+      "additional_information": "Setting the filter to \"Reject\" will dramatically reduce the logging data accumulation for this recommendation and provide sufficient information for the purposes of breach detection, research and remediation. However, during periods of least privilege security group engineering, setting this the filter to \"All\" can be very helpful in discovering existing traffic flows required for proper operation of an already running environment."
+    }    
+  ]
+}

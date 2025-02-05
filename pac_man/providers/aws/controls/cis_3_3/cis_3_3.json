@@ -1,0 +1,36 @@
+{
+    "id": "3.3",
+    "title": "Ensure the S3 bucket used to store CloudTrail logs is not publicly accessible",
+    "description": "CloudTrail logs a record of every API call made in your AWS account. These logs file are stored in an S3 bucket. It is recommended that the bucket policy or access control list (ACL) applied to the S3 bucket that CloudTrail logs to prevent public access to the CloudTrail logs.",
+    "rationale": "Allowing public access to CloudTrail log content may aid an adversary in identifying weaknesses in the affected account's use or configuration.",
+    "remediation_type": "Automated",
+    "profile_applicability": "Level 1",
+    "audit_procedure": "From Console:\n1. Go to the Amazon CloudTrail console at https://console.aws.amazon.com/cloudtrail/home.\n2. In the API activity history pane on the left, click Trails.\n3. In the Trails pane, note the bucket names in the S3 bucket column\n4. Go to Amazon S3 console at https://console.aws.amazon.com/s3/home.\n5. For each bucket noted in step 3, right-click on the bucket and click Properties.\n6. In the Properties pane, click the Permissions tab.\n7. The tab shows a list of grants, one row per grant, in the bucket ACL. Each row identifies the grantee and the permissions granted.\n8. Ensure no rows exists that have the Grantee set to Everyone or the Grantee set to Any Authenticated User.\n9. If the Edit bucket policy button is present, click it to review the bucket policy.\n10. Ensure the policy does not contain a Statement having an Effect set to Allow and a Principal set to \"*\" or {\"AWS\": \"*\"}, or if it does, ensure that it has a condition in place to restrict access, such as aws:PrincipalOrgID.\n\nFrom Command Line:\n1. Get the name of the S3 bucket that CloudTrail is logging to:\naws cloudtrail describe-trails --query 'trailList[*].S3BucketName'\n2. Ensure the AllUsers principal is not granted privileges to that <bucket>:\naws s3api get-bucket-acl --bucket <s3_bucket_for_cloudtrail> --query 'Grants[?Grantee.URI== `https://acs.amazonaws.com/groups/global/AllUsers` ]'\n3. Ensure the AuthenticatedUsers principal is not granted privileges to that <bucket>:\naws s3api get-bucket-acl --bucket <s3_bucket_for_cloudtrail> --query 'Grants[?Grantee.URI== `https://acs.amazonaws.com/groups/global/AuthenticatedUsers`]'\n4. Get the S3 Bucket Policy:\naws s3api get-bucket-policy --bucket <s3_bucket_for_cloudtrail>\n5. Ensure the policy does not contain a Statement having an Effect set to Allow and a Principal set to \"*\" or {\"AWS\": \"*\"}. Additionally, check to see whether a condition has been added to the bucket policy covering aws:PrincipalOrgID, as having this (in the StringEquals or StringEqualsIgnoreCase) would restrict access to only the named Org ID.",
+    "remediation_procedure": "1. Go to Amazon S3 console at https://console.aws.amazon.com/s3/home.\n2. Right-click on the bucket and click Properties\n3. In the Properties pane, click the Permissions tab.\n4. The tab shows a list of grants, one row per grant, in the bucket ACL. Each row identifies the grantee and the permissions granted.\n5. Select the row that grants permission to Everyone or Any Authenticated User.\n6. Uncheck all the permissions granted to Everyone or Any Authenticated User (click x to delete the row).\n7. Click Save to save the ACL.\n8. If the Edit bucket policy button is present, click it.\n9. Remove any Statement having an Effect set to Allow and a Principal set to \"*\" or {\"AWS\": \"*\"}, that doesn't also have a condition to restrict access, such as aws:PrincipalOrgID.",
+    "default_value": "By default, S3 buckets are not publicly accessible.",
+    "references": [
+      "CCE-78915-6",
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_principal.html"
+    ],
+    "cis_controls_v8": [
+      {
+        "control_id": "3.3",
+        "control_name": "Configure Data Access Control Lists",
+        "control_description": "Configure data access control lists based on a user's need to know. Apply data access control lists, also known as access permissions, to local and remote file systems, databases, and applications.",
+        "asset_type": "Data",
+        "security_function": "Protect",
+        "implementation_groups": [
+          1,
+          2,
+          3
+        ],
+        "applicability_of_service_model": {
+          "IaaS": true,
+          "PaaS": false,
+          "SaaS": false,
+          "FaaS": false
+        }
+      }
+    ],
+    "additional_information": "Note: Principal set to \"*\" or {\"AWS\": \"*\"}, without any conditions, allows anonymous access."
+  }

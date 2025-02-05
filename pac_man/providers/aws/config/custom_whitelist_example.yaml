@@ -1,0 +1,40 @@
+# Custom Whitelist Configuration Example
+# This file demonstrates how to create a custom whitelist for security checks
+
+# Format:
+# check_id:
+#   roles:        # List of role names/patterns to exclude
+#   - role_name1
+#   - role_name2
+#   users:        # List of user names/patterns to exclude
+#   - user_name1
+#   policies:     # List of policy names/patterns to exclude
+#   - policy_name1
+#   reason: "Explanation of why these resources are whitelisted"
+
+# Example: Whitelist for CIS 1.16 (IAM policies with full admin privileges)
+cis_1_16:
+  roles:
+    - MyCustomAdminRole
+    - project-admin-*     # Wildcard pattern for project admin roles
+    - terraform-*         # Wildcard pattern for Terraform-managed roles
+  reason: "These roles require administrative access for infrastructure management and automation"
+
+# Example: Whitelist for another check
+cis_1_4:
+  users:
+    - emergency-admin
+    - break-glass-*
+  reason: "Emergency access accounts that require elevated privileges"
+
+# You can add more check configurations following the same pattern
+# check_id:
+#   resource_type:
+#     - resource_name
+#   reason: "Explanation"
+
+# Notes:
+# 1. This is just an example file. Create your own whitelist based on your needs.
+# 2. Use wildcards (*) in resource names to match multiple resources.
+# 3. Always provide a clear reason for whitelisting resources.
+# 4. Keep this file secure as it contains security-sensitive decisions.

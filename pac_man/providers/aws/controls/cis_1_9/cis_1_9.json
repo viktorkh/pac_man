@@ -1,0 +1,37 @@
+{
+    "id": "1.9",
+    "title": "Ensure IAM password policy prevents password reuse",
+    "profile": "Level 1",
+    "description": "IAM password policies can prevent the reuse of a given password by the same user. It is recommended that the password policy prevent the reuse of passwords.",
+    "rationale": "Preventing password reuse increases account resiliency against brute force login attempts.",
+    "remediation_type": "Automated",
+    "audit": "Perform the following to ensure the password policy is configured as prescribed:\nFrom Console:\n1. Login to AWS Console (with appropriate permissions to View Identity Access Management Account Settings)\n2. Go to IAM Service on the AWS Console\n3. Click on Account Settings on the Left Pane\n4. Ensure \"Prevent password reuse\" is checked\n5. Ensure \"Number of passwords to remember\" is set to 24\nFrom Command Line:\naws iam get-account-password-policy\nEnsure the output of the above command includes \"PasswordReusePrevention\": 24",
+    "remediation": "Perform the following to set the password policy as prescribed:\nFrom Console:\n1. Login to AWS Console (with appropriate permissions to View Identity Access Management Account Settings)\n2. Go to IAM Service on the AWS Console\n3. Click on Account Settings on the Left Pane\n4. Check \"Prevent password reuse\"\n5. Set \"Number of passwords to remember\" is set to 24\nFrom Command Line:\naws iam update-account-password-policy --password-reuse-prevention 24\nNote: All commands starting with \"aws iam update-account-password-policy\" can be combined into a single command.",
+    "impact": "",
+    "default_value": "",
+    "references": [
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_passwords_account-policy.html",
+      "https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#configure-strong-password-policy"
+    ],
+    "cis_controls_v8": [
+      {
+        "id": "5.2",
+        "name": "Use Unique Passwords",
+        "description": "Use unique passwords for all enterprise assets. Best practice implementation includes, at a minimum, an 8-character password for accounts using MFA and a 14-character password for accounts not using MFA.",
+        "asset_type": "Users",
+        "security_function": "Protect",
+        "implementation_groups": [
+          1,
+          2,
+          3
+        ],
+        "applicability_of_service_model": {
+          "IaaS": true,
+          "PaaS": true,
+          "SaaS": true,
+          "FaaS": true
+        }
+      }
+    ],
+    "additional_information": ""
+  }

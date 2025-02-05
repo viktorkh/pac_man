@@ -1,0 +1,27 @@
+# AWS Security Checks Whitelist Configuration
+# This file defines resources that should be excluded from specific security checks
+
+# Format:
+# check_id:
+#   roles:        # List of role names to exclude
+#   - role_name1
+#   - role_name2
+#   reason: "Explanation of why these resources are whitelisted"
+
+cis_1_16:
+  roles:
+    - aws-controltower-AdministratorExecutionRole
+    - AWSControlTowerExecution
+    - AWSCloudFormationStackSetExecutionRole
+    - stacksets-exec-*  # Supports wildcard pattern matching
+  reason: "These are essential AWS Control Tower and CloudFormation system roles that require administrative access for infrastructure management"
+
+# Template for adding more checks
+# check_id:
+#   roles:
+#     - role_name
+#   users:
+#     - user_name
+#   policies:
+#     - policy_name
+#   reason: "Explanation"

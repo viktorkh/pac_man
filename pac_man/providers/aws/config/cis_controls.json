@@ -1,0 +1,77 @@
+{
+    "controls": [
+        {
+            "id": "cis_1_20",
+            "check": "cis_1_20_check",
+            "fix": "cis_1_20_fix"
+        },
+        {
+            "id": "cis_1_16",
+            "check": "cis_1_16_check",
+            "fix": "cis_1_16_fix"
+        },
+        {
+            "id": "cis_1_8",
+            "check": "cis_1_8_check",
+            "fix": "cis_1_8_fix"
+        },
+        {
+            "id": "cis_1_14",
+            "check": "cis_1_14_check",
+            "fix": "cis_1_14_fix"
+        },
+        {
+            "id": "cis_1_13",
+            "check": "cis_1_13_check",
+            "fix": "cis_1_13_fix"
+        },
+        {
+            "id": "cis_1_9",
+            "check": "cis_1_9_check",
+            "fix": "cis_1_9_fix"
+        },
+        {
+            "id": "cis_1_4",
+            "check": "cis_1_4_check",
+            "fix": "cis_1_4_fix"
+        },
+        {
+            "id": "cis_3_11",
+            "check": "cis_3_11_check",
+            "fix": "cis_3_11_fix"
+        },
+        {
+            "id": "cis_3_5",
+            "check": "cis_3_5_check",
+            "fix": "cis_3_5_fix"
+        },
+        {
+            "id": "cis_2_1_2",
+            "check": "cis_2_1_2_check"
+        },
+        {
+            "id": "cis_2_1_3",
+            "check": "cis_2_1_3_check"
+        },
+        {
+            "id": "cis_2_1_4",
+            "check": "cis_2_1_4_check",
+            "fix": "cis_2_1_4_fix"
+        },
+        {
+            "id": "cis_1_12",
+            "check": "cis_1_12_check",
+            "fix": "cis_1_12_fix"
+        },
+        {
+            "id": "cis_1_10",
+            "check": "cis_1_10_check",
+            "fix": "cis_1_10_fix"
+        },
+        {
+            "id": "cis_3_3",
+            "check": "cis_3_3_check",
+            "fix": "cis_3_3_fix"
+        }
+    ]
+}
