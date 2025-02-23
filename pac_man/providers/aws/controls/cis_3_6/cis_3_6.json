@@ -1,0 +1,54 @@
+{
+    "id": "3.6",
+    "title": "Ensure S3 bucket access logging is enabled on the CloudTrail S3 bucket",
+    "description": "S3 Bucket Access Logging generates a log that contains access records for each request made to your S3 bucket. An access log record contains details about the request, such as the request type, the resources specified in the request worked, and the time and date the request was processed. It is recommended that bucket access logging be enabled on the CloudTrail S3 bucket.",
+    "rationale": "By enabling S3 bucket logging on target S3 buckets, it is possible to capture all events which may affect objects within any target buckets. Configuring logs to be placed in a separate bucket allows access to log information which can be useful in security and incident response workflows.",
+    "remediation_type": "Automated",
+    "profile_applicability": "Level 1",
+    "audit_procedure": "Perform the following to ensure the CloudTrail S3 bucket has access logging enabled:\n\nFrom Console:\n1. Go to the Amazon CloudTrail console at https://console.aws.amazon.com/cloudtrail/home\n2. In the API activity history pane on the left, click Trails\n3. In the Trails pane, note the bucket names in the S3 bucket column\n4. Sign in to the AWS Management Console and open the S3 console at https://console.aws.amazon.com/s3\n5. Under All Buckets click on a target S3 bucket\n6. Click on Properties in the top right of the console\n7. Under Bucket: _<bucket_name>_ click on Logging\n8. Ensure Enabled is checked.\n\nFrom Command Line:\n1. Get the name of the S3 bucket that CloudTrail is logging to: aws cloudtrail describe-trails --query 'trailList[*].S3BucketName'\n2. Ensure Bucket Logging is enabled: aws s3api get-bucket-logging --bucket <s3_bucket_for_cloudtrail>\nEnsure command does not return empty output. Sample Output for a bucket with logging enabled: { \"LoggingEnabled\": { \"TargetPrefix\": \"<Prefix_Test>\", \"TargetBucket\": \"<Bucket_name_for_Storing_Logs>\" } }",
+    "remediation_procedure": "Perform the following to enable S3 bucket logging:\n\nFrom Console:\n1. Sign in to the AWS Management Console and open the S3 console at https://console.aws.amazon.com/s3\n2. Under All Buckets click on the target S3 bucket\n3. Click on Properties in the top right of the console\n4. Under Bucket: <s3_bucket_for_cloudtrail> click on Logging\n5. Configure bucket logging\n   - Click on the Enabled checkbox\n   - Select Target Bucket from list\n   - Enter a Target Prefix\n6. Click Save.\n\nFrom Command Line:\n1. Get the name of the S3 bucket that CloudTrail is logging to: aws cloudtrail describe-trails --region <region-name> --query trailList[*].S3BucketName\n2. Copy and add target bucket name at <Logging_BucketName>, Prefix for logfile at <LogFilePrefix> and optionally add an email address in the following template and save it as <FileName.Json>:\n\n{ \"LoggingEnabled\": { \"TargetBucket\": \"<Logging_BucketName>\", \"TargetPrefix\": \"<LogFilePrefix>\", \"TargetGrants\": [ { \"Grantee\": { \"Type\": \"AmazonCustomerByEmail\", \"EmailAddress\": \"<EmailID>\" }, \"Permission\": \"FULL_CONTROL\" } ] } }\n\n3. Run the put-bucket-logging command with bucket name and <FileName.Json> as input, for more information refer at put-bucket-logging: aws s3api put-bucket-logging --bucket <BucketName> --bucket-logging-status file://<FileName.Json>",
+    "impact": "Enabling S3 bucket access logging may incur additional costs for storing and managing the log files. The cost depends on the volume of requests to the bucket and the storage used for the logs.",
+    "references": [
+        "CCE-78918-0",
+        "https://docs.aws.amazon.com/AmazonS3/latest/dev/ServerLogs.html"
+    ],
+    "cis_controls_v8": [
+        {
+            "control_id": "3.14",
+            "control_name": "Log Sensitive Data Access",
+            "control_description": "Log sensitive data access, including modification and disposal.",
+            "asset_type": "Data",
+            "security_function": "Monitor",
+            "implementation_groups": [
+                1,
+                2,
+                3
+            ],
+            "applicability_of_service_model": {
+                "IaaS": true,
+                "PaaS": true,
+                "SaaS": true,
+                "FaaS": true
+            }
+        },
+        {
+            "control_id": "8.2",
+            "control_name": "Collect Audit Logs",
+            "control_description": "Collect audit logs. Ensure that logging, per the enterprise’s audit log management process, has been enabled across enterprise assets.",
+            "asset_type": "Data",
+            "security_function": "Monitor",
+            "implementation_groups": [
+                1,
+                2,
+                3
+            ],
+            "applicability_of_service_model": {
+                "IaaS": true,
+                "PaaS": true,
+                "SaaS": true,
+                "FaaS": true
+            }
+        }
+    ],
+    "additional_information": "Ensure that the target bucket for logging has proper permissions and retention policies configured to manage the log files effectively."
+}

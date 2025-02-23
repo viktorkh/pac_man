@@ -24,6 +24,7 @@ from .config_service import ConfigService
 from .sts_service import STSService
 from .macie_service import MacieService
 from .service_factory import AWSServiceFactory
+from .rds_service import RDSService
 
 __all__ = [
     'AWSServiceBase',
@@ -33,6 +34,7 @@ __all__ = [
     'ConfigService',
     'STSService',
     'MacieService',
-    'AWSServiceFactory'
+    'AWSServiceFactory',
+    'RDSService'
 ]
 

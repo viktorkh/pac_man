@@ -1,0 +1,36 @@
+{
+    "id": "5.4",
+    "title": "Ensure the default security group of every VPC restricts all traffic",
+    "description": "A VPC comes with a default security group whose initial settings deny all inbound traffic, allow all outbound traffic, and allow all traffic between instances assigned to the security group. If you don't specify a security group when you launch an instance, the instance is automatically assigned to this default security group. Security groups provide stateful filtering of ingress/egress network traffic to AWS resources. It is recommended that the default security group restrict all traffic.",
+    "rationale": "Configuring all VPC default security groups to restrict all traffic will encourage least privilege security group development and mindful placement of AWS resources into security groups which will in-turn reduce the exposure of those resources.",
+    "remediation_type": "Automated",
+    "profile_applicability": "Level 2",
+    "audit_procedure": "Perform the following to determine if the account is configured as prescribed:\n\nSecurity Group State\n1. Login to the AWS Management Console at https://console.aws.amazon.com/vpc/home\n2. Repeat the next steps for all VPCs - including the default VPC in each AWS region:\n3. In the left pane, click Security Groups\n4. For each default security group, perform the following:\n5. Select the default security group\n6. Click the Inbound Rules tab\n7. Ensure no rule exist\n8. Click the Outbound Rules tab\n9. Ensure no rules exist\n\nSecurity Group Members\n1. Login to the AWS Management Console at https://console.aws.amazon.com/vpc/home\n2. Repeat the next steps for all default groups in all VPCs - including the default VPC in each AWS region:\n3. In the left pane, click Security Groups\n4. Copy the id of the default security group.\n5. Change to the EC2 Management Console at https://console.aws.amazon.com/ec2/v2/home\n6. In the filter column type 'Security Group ID : < security group id from #4 >'",
+    "remediation_procedure": "Perform the following to implement the prescribed state:\n\nSecurity Group Members\n1. Identify AWS resources that exist within the default security group\n2. Create a set of least privilege security groups for those resources\n3. Place the resources in those security groups\n4. Remove the resources noted in #1 from the default security group\n\nSecurity Group State\n1. Login to the AWS Management Console at https://console.aws.amazon.com/vpc/home\n2. Repeat the next steps for all VPCs - including the default VPC in each AWS region:\n3. In the left pane, click Security Groups\n4. For each default security group, perform the following:\n5. Select the default security group\n6. Click the Inbound Rules tab\n7. Remove any inbound rules\n8. Click the Outbound Rules tab\n9. Remove any Outbound rules\n\nRecommended: IAM groups allow you to edit the \"name\" field. After remediating default groups rules for all VPCs in all regions, edit this field to add text similar to \"DO NOT USE. DO NOT ADD RULES\"",
+    "impact": "Implementing this recommendation in an existing VPC containing operating resources requires extremely careful migration planning as the default security groups are likely to be enabling many ports that are unknown. Enabling VPC flow logging (of accepts) in an existing environment that is known to be breach free will reveal the current pattern of ports being used for each instance to communicate successfully.",
+    "references": [
+        "CCE-79201-0",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html",
+        "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security-groups.html#default-security-group"
+    ],
+    "cis_controls_v8": [
+        {
+            "control_id": "3.3",
+            "control_name": "Configure Data Access Control Lists",
+            "control_description": "Configure data access control lists based on a user's need to know. Apply data access control lists, also known as access permissions, to local and remote file systems, databases, and applications.",
+            "asset_type": "Data",
+            "security_function": "Protect",
+            "implementation_groups": [
+                1,
+                2,
+                3
+            ],
+            "applicability_of_service_model": {
+                "IaaS": true,
+                "PaaS": true,
+                "SaaS": true,
+                "FaaS": true
+            }
+        }
+    ]
+}

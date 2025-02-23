@@ -628,3 +628,168 @@ class TestUpdateAccessKey:
         assert result['success'] is False
         assert result['error_code'] == 'NoSuchEntity'
         assert result['operation'] == 'update_access_key for user testuser'
+
+class TestCreateAccessKey:
+    """Tests for create_access_key method."""
+    
+    def test_success(self, iam_service, mock_client):
+        """Test successful access key creation."""
+        mock_response = {
+            'AccessKey': {
+                'AccessKeyId': 'AKIA123456789',
+                'SecretAccessKey': 'secretkey'
+            }
+        }
+        mock_client.create_access_key.return_value = mock_response
+        
+        result = iam_service.create_access_key('testuser')
+        
+        mock_client.create_access_key.assert_called_once_with(UserName='testuser')
+        assert result['success'] is True
+        assert result['access_key'] == mock_response['AccessKey']
+    
+    def test_error(self, iam_service, mock_client):
+        """Test error handling in access key creation."""
+        error_response = {
+            'Error': {
+                'Code': 'LimitExceeded',
+                'Message': 'Cannot create more access keys'
+            },
+            'ResponseMetadata': {
+                'RequestId': '1234567890',
+                'HTTPStatusCode': 400
+            }
+        }
+        mock_client.create_access_key.side_effect = ClientError(
+            error_response, 'CreateAccessKey'
+        )
+        
+        result = iam_service.create_access_key('testuser')
+        
+        assert result['success'] is False
+        assert result['error_code'] == 'LimitExceeded'
+        assert result['operation'] == 'create_access_key for user testuser'
+
+
+class TestCreateRole:
+    """Tests for create_role method."""
+    
+    def test_success(self, iam_service, mock_client):
+        """Test successful role creation."""
+        mock_response = {
+            'Role': {
+                'RoleName': 'test-role',
+                'Arn': 'arn:aws:iam::role/test-role'
+            }
+        }
+        mock_client.create_role.return_value = mock_response
+        
+        result = iam_service.create_role('test-role', '{}')
+        
+        mock_client.create_role.assert_called_once_with(RoleName='test-role', AssumeRolePolicyDocument='{}')
+        assert result['success'] is True
+        assert result['Role'] == mock_response['Role']
+    
+    def test_error(self, iam_service, mock_client):
+        """Test error handling in role creation."""
+        error_response = {
+            'Error': {
+                'Code': 'EntityAlreadyExists',
+                'Message': 'Role already exists'
+            },
+            'ResponseMetadata': {
+                'RequestId': '1234567890',
+                'HTTPStatusCode': 409
+            }
+        }
+        mock_client.create_role.side_effect = ClientError(
+            error_response, 'CreateRole'
+        )
+        
+        result = iam_service.create_role('test-role', '{}')
+        
+        assert result['success'] is False
+        assert result['error_code'] == 'EntityAlreadyExists'
+        assert result['operation'] == 'create_role for test-role'
+
+
+class TestGetRole:
+    """Tests for get_role method."""
+    
+    def test_success(self, iam_service, mock_client):
+        """Test successful role retrieval."""
+        mock_response = {
+            'Role': {
+                'RoleName': 'test-role',
+                'Arn': 'arn:aws:iam::role/test-role'
+            }
+        }
+        mock_client.get_role.return_value = mock_response
+        
+        result = iam_service.get_role('test-role')
+        
+        mock_client.get_role.assert_called_once_with(RoleName='test-role')
+        assert result['success'] is True
+        assert result['Role'] == mock_response['Role']
+    
+    def test_error(self, iam_service, mock_client):
+        """Test error handling in role retrieval."""
+        error_response = {
+            'Error': {
+                'Code': 'NoSuchEntity',
+                'Message': 'Role not found'
+            },
+            'ResponseMetadata': {
+                'RequestId': '1234567890',
+                'HTTPStatusCode': 404
+            }
+        }
+        mock_client.get_role.side_effect = ClientError(
+            error_response, 'GetRole'
+        )
+        
+        result = iam_service.get_role('test-role')
+        
+        assert result['success'] is False
+        assert result['error_code'] == 'NoSuchEntity'
+        assert result['operation'] == 'get_role for test-role'
+
+
+class TestAttachRolePolicy:
+    """Tests for attach_role_policy method."""
+
+    def test_success(self, iam_service, mock_client):
+        """Test successful role policy attachment."""
+        # Mock the attach_role_policy call to return None (since AWS API doesn't return anything)
+        mock_client.attach_role_policy.return_value = None
+
+        result = iam_service.attach_role_policy('test-role', 'arn:aws:iam::policy')
+
+        mock_client.attach_role_policy.assert_called_once_with(
+            RoleName='test-role',
+            PolicyArn='arn:aws:iam::policy'
+        )
+        assert result['success'] is True  # Ensure the method's return structure is correct
+
+    
+    def test_error(self, iam_service, mock_client):
+        """Test error handling in role policy attachment."""
+        error_response = {
+            'Error': {
+                'Code': 'NoSuchEntity',
+                'Message': 'Role not found'
+            },
+            'ResponseMetadata': {
+                'RequestId': '1234567890',
+                'HTTPStatusCode': 404
+            }
+        }
+        mock_client.attach_role_policy.side_effect = ClientError(
+            error_response, 'AttachRolePolicy'
+        )
+        
+        result = iam_service.attach_role_policy('test-role', 'arn:aws:iam::policy')
+        
+        assert result['success'] is False
+        assert result['error_code'] == 'NoSuchEntity'
+        assert result['operation'] == 'attach_role_policy for role test-role'

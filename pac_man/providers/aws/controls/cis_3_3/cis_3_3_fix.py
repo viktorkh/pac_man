@@ -16,7 +16,7 @@ def execute(session, finding, logger, service_factory):
     Returns:
         The updated finding object
     """
-    s3_service: S3Service = service_factory.get_service('S3')
+    s3_service: S3Service = service_factory.get_service('s3')
     bucket_name = finding.resource_id
 
     try:

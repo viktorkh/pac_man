@@ -11,6 +11,7 @@ from .sts_service import STSService
 from .ec2_service import EC2Service
 from .access_analyzer_service import AccessAnalyzerService
 from .macie_service import MacieService 
+from .rds_service import RDSService
 
 
 class AWSServiceFactory:
@@ -82,7 +83,8 @@ class AWSServiceFactory:
             'sts': STSService,
             'ec2': EC2Service,
             'access_analyzer': AccessAnalyzerService,
-            'macie' : MacieService
+            'macie' : MacieService,
+            'rds': RDSService
         }
         
         if service_type not in service_map:

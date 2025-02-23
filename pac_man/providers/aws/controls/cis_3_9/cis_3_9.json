@@ -1,0 +1,47 @@
+{
+    "id": "3.9",
+    "title": "Ensure VPC flow logging is enabled in all VPCs",
+    "description": "VPC Flow Logs is a feature that enables you to capture information about the IP traffic going to and from network interfaces in your VPC. After you've created a flow log, you can view and retrieve its data in Amazon CloudWatch Logs. It is recommended that VPC Flow Logs be enabled for packet \"Rejects\" for VPCs.",
+    "rationale": "VPC Flow Logs provide visibility into network traffic that traverses the VPC and can be used to detect anomalous traffic or insight during security workflows.",
+    "remediation_type": "Automated",
+    "profile_applicability": "Level 2",
+    "impact": "By default, CloudWatch Logs will store Logs indefinitely unless a specific retention period is defined for the log group. When choosing the number of days to retain, keep in mind the average days it takes an organization to realize they have been breached is 210 days (at the time of this writing). Since additional time is required to research a breach, a minimum 365 day retention policy allows time for detection and research. You may also wish to archive the logs to a cheaper storage service rather than simply deleting them.",
+    "audit_procedure": "From Console:\n1. Sign into the management console\n2. Select Services then VPC\n3. In the left navigation pane, select Your VPCs\n4. Select a VPC\n5. In the right pane, select the Flow Logs tab.\n6. Ensure a Log Flow exists that has Active in the Status column.\n\nFrom Command Line:\n1. Run describe-vpcs command to list the VPC networks available in the current AWS region\n2. Run describe-flow-logs command using the VPC ID to determine if the selected virtual network has the Flow Logs feature enabled\n3. Repeat for all VPCs in all regions",
+    "remediation_procedure": "From Console:\n1. Sign into the management console\n2. Select Services then VPC\n3. In the left navigation pane, select Your VPCs\n4. Select a VPC\n5. In the right pane, select the Flow Logs tab.\n6. If no Flow Log exists, click Create Flow Log\n7. For Filter, select Reject\n8. Enter in a Role and Destination Log Group\n9. Click Create Log Flow\n10. Click on CloudWatch Logs Group\n\nFrom Command Line:\n1. Create necessary IAM roles and policies\n2. Use the create-flow-logs command to enable flow logs for each VPC",
+    "default_value": "By default, VPC flow logging is not enabled.",
+    "references": [
+      "CCE-79202-8",
+      "https://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/flow-logs.html"
+    ],
+    "cis_controls_v8": [
+      {
+        "control_id": "8.2",
+        "control_name": "Collect Audit Logs",
+        "control_description": "Collect audit logs. Ensure that logging, per the enterprise's audit log management process, has been enabled across enterprise assets.",
+        "asset_type": "Network",
+        "security_function": "Detect",
+        "implementation_groups": [1, 2, 3],
+        "applicability_of_service_model": {
+          "IaaS": true,
+          "PaaS": true,
+          "SaaS": true,
+          "FaaS": true
+        }
+      },
+      {
+        "control_id": "13.6",
+        "control_name": "Collect Network Traffic Flow Logs",
+        "control_description": "Collect network traffic flow logs and/or network traffic to review and alert upon from network devices.",
+        "asset_type": "Network",
+        "security_function": "Detect",
+        "implementation_groups": [2, 3],
+        "applicability_of_service_model": {
+          "IaaS": true,
+          "PaaS": false,
+          "SaaS": false,
+          "FaaS": false
+        }
+      }
+    ],
+    "additional_information": "Setting the filter to \"Reject\" will dramatically reduce the logging data accumulation for this recommendation and provide sufficient information for the purposes of breach detection, research and remediation. However, during periods of least privilege security group engineering, setting this the filter to \"All\" can be very helpful in discovering existing traffic flows required for proper operation of an already running environment."
+  }
