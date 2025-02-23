@@ -345,3 +345,31 @@ class IAMService(AWSServiceBase):
             }
         except Exception as e:
             return self._handle_error(e, f'create_access_key for user {user_name}')
+        
+    def create_role(self, RoleName: str, AssumeRolePolicyDocument: str) -> Dict[str, Any]:
+        try:
+            response = self.client.create_role(
+                RoleName=RoleName,
+                AssumeRolePolicyDocument=AssumeRolePolicyDocument
+            )
+            return {'success': True, 'Role': response['Role']}
+        except Exception as e:
+            return self._handle_error(e, f'create_role for {RoleName}')
+
+    def get_role(self, RoleName: str) -> Dict[str, Any]:
+        try:
+            response = self.client.get_role(RoleName=RoleName)
+            return {'success': True, 'Role': response['Role']}
+        except Exception as e:
+            return self._handle_error(e, f'get_role for {RoleName}')
+
+    def attach_role_policy(self, RoleName: str, PolicyArn: str) -> Dict[str, Any]:
+        try:
+            self.client.attach_role_policy(RoleName=RoleName, PolicyArn=PolicyArn)
+            return {
+                'success': True,
+                'message': f'Successfully attached policy {PolicyArn} to role {RoleName}'
+            }
+        except Exception as e:
+            return self._handle_error(e, f'attach_role_policy for role {RoleName}')
+

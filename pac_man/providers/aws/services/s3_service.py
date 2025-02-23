@@ -245,3 +245,46 @@ class S3Service(AWSServiceBase):
             }
         except Exception as e:
             return self._handle_error(e, f'get_bucket_acl for bucket {bucket_name}')
+    def get_bucket_logging(self, bucket_name: str) -> Dict[str, Any]:
+        """
+        Get the logging configuration for a bucket.
+        
+        Args:
+            bucket_name: Name of the S3 bucket
+            
+        Returns:
+            Dict containing the bucket logging configuration or error information
+        """
+        try:
+            response = self.client.get_bucket_logging(Bucket=bucket_name)
+            return {
+                'success': True,
+                'LoggingEnabled': response.get('LoggingEnabled', {})
+            }
+        except Exception as e:
+            return self._handle_error(e, f'get_bucket_logging for bucket {bucket_name}')
+        
+    def put_bucket_logging(self, bucket_name: str, logging_config: Dict[str, str]) -> Dict[str, Any]:
+        """
+        Enable logging for a bucket.
+        
+        Args:
+            bucket_name: Name of the S3 bucket
+            logging_config: Logging configuration dictionary
+            
+        Returns:
+            Dict containing the operation result or error information
+        """
+        try:
+            self.client.put_bucket_logging(
+                Bucket=bucket_name,
+                BucketLoggingStatus={
+                    'LoggingEnabled': logging_config
+                }
+            )
+            return {
+                'success': True,
+                'message': f'Logging enabled successfully for bucket {bucket_name}'
+            }
+        except Exception as e:
+            return self._handle_error(e, f'put_bucket_logging for bucket {bucket_name}')

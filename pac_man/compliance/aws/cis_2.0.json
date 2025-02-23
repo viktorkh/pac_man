@@ -1036,6 +1036,42 @@
       "additional_information": "Regularly review and audit S3 bucket permissions and public access settings to ensure they align with your organization's security policies. Consider using AWS Config rules or third-party tools to continuously monitor and alert on any changes to S3 bucket public access settings."
     },
     {
+      "id": "2.3.3",
+      "title": "Ensure that public access is not given to RDS Instance",
+      "description": "Ensure and verify that RDS database instances provisioned in your AWS account do restrict unauthorized access in order to minimize security risks. To restrict access to any publicly accessible RDS database instance, you must disable the database Publicly Accessible flag and update the VPC security group associated with the instance.",
+      "rationale": "Ensure that no public-facing RDS database instances are provisioned in your AWS account and restrict unauthorized access in order to minimize security risks. When the RDS instance allows unrestricted access (0.0.0.0/0), everyone and everything on the Internet can establish a connection to your database and this can increase the opportunity for malicious activities such as brute force attacks, PostgreSQL injections, or DoS/DDoS attacks.",
+      "remediation_type": "Automated",
+      "profile_applicability": "Level 1",
+      "audit_procedure": "From Console:\n1. Log in to the AWS management console and navigate to the RDS dashboard at https://console.aws.amazon.com/rds/.\n2. Under the navigation panel, On RDS Dashboard, click Databases.\n3. Select the RDS instance that you want to examine.\n4. Click Instance Name from the dashboard, Under `Connectivity and Security.\n5. On the Security, check if the Publicly Accessible flag status is set to Yes, follow the below-mentioned steps to check database subnet access.\n• In the networking section, click the subnet link available under Subnets\n• The link will redirect you to the VPC Subnets page.\n• Select the subnet listed on the page and click the Route Table tab from the dashboard bottom panel. If the route table contains any entries with the destination CIDR block set to 0.0.0.0/0 and with an Internet Gateway attached.\n• The selected RDS database instance was provisioned inside a public subnet, therefore is not running within a logically isolated environment and can be accessible from the Internet.\n6. Repeat steps no. 4 and 5 to determine the type (public or private) and subnet for other RDS database instances provisioned in the current region.\n7. Change the AWS region from the navigation bar and repeat the audit process for other regions.\n\nFrom Command Line:\n1. Run describe-db-instances command to list all RDS database names, available in the selected AWS region: aws rds describe-db-instances --region <region-name> --query 'DBInstances[*].DBInstanceIdentifier'\n2. The command output should return each database instance identifier.\n3. Run again describe-db-instances command using the PubliclyAccessible parameter as query filter to reveal the database instance Publicly Accessible flag status: aws rds describe-db-instances --region <region-name> --db-instance-identifier <db-instance-name> --query 'DBInstances[*].PubliclyAccessible'\n4. Check for the Publicly Accessible parameter status, If the Publicly Accessible flag is set to Yes. Then selected RDS database instance is publicly accessible and insecure, follow the below-mentioned steps to check database subnet access\n5. Run again describe-db-instances command using the RDS database instance identifier that you want to check and appropriate filtering to describe the VPC subnet(s) associated with the selected instance: aws rds describe-db-instances --region <region-name> --db-instance-identifier <db-name> --query 'DBInstances[*].DBSubnetGroup.Subnets[]'\n• The command output should list the subnets available in the selected database subnet group.\n6. Run describe-route-tables command using the ID of the subnet returned at the previous step to describe the routes of the VPC route table associated with the selected subnet: aws ec2 describe-route-tables --region <region-name> --filters \"Name=association.subnet-id,Values=<SubnetID>\" --query 'RouteTables[*].Routes[]'\n• If the command returns the route table associated with database instance subnet ID. Check the GatewayId and DestinationCidrBlock attributes values returned in the output. If the route table contains any entries with the GatewayId value set to igw-xxxxxxxx and the DestinationCidrBlock value set to 0.0.0.0/0, the selected RDS database instance was provisioned inside a public subnet.\n• Or\n• If the command returns empty results, the route table is implicitly associated with subnet, therefore the audit process continues with the next step\n7. Run again describe-db-instances command using the RDS database instance identifier that you want to check and appropriate filtering to describe the VPC ID associated with the selected instance: aws rds describe-db-instances --region <region-name> --db-instance-identifier <db-name> --query 'DBInstances[*].DBSubnetGroup.VpcId'\n• The command output should show the VPC ID in the selected database subnet group\n8. Now run describe-route-tables command using the ID of the VPC returned at the previous step to describe the routes of the VPC main route table implicitly associated with the selected subnet: aws ec2 describe-route-tables --region <region-name> --filters \"Name=vpc-id,Values=<VPC-ID>\" \"Name=association.main,Values=true\" --query 'RouteTables[*].Routes[]'\n• The command output returns the VPC main route table implicitly associated with database instance subnet ID. Check the GatewayId and DestinationCidrBlock attributes values returned in the output. If the route table contains any entries with the GatewayId value set to igw-xxxxxxxx and the DestinationCidrBlock value set to 0.0.0.0/0, the selected RDS database instance was provisioned inside a public subnet, therefore is not running within a logically isolated environment and does not adhere to AWS security best practices.",
+      "remediation_procedure": "From Console:\n1. Log in to the AWS management console and navigate to the RDS dashboard at https://console.aws.amazon.com/rds/.\n2. Under the navigation panel, On RDS Dashboard, click Databases.\n3. Select the RDS instance that you want to update.\n4. Click Modify from the dashboard top menu.\n5. On the Modify DB Instance panel, under the Connectivity section, click on Additional connectivity configuration and update the value for Publicly Accessible to Not publicly accessible to restrict public access. Follow the below steps to update subnet configurations:\n• Select the Connectivity and security tab, and click on the VPC attribute value inside the Networking section.\n• Select the Details tab from the VPC dashboard bottom panel and click on Route table configuration attribute value.\n• On the Route table details page, select the Routes tab from the dashboard bottom panel and click on Edit routes.\n• On the Edit routes page, update the Destination of Target which is set to igw-xxxxx and click on Save routes.\n6. On the Modify DB Instance panel Click on Continue and In the Scheduling of modifications section, perform one of the following actions based on your requirements:\n• Select Apply during the next scheduled maintenance window to apply the changes automatically during the next scheduled maintenance window.\n• Select Apply immediately to apply the changes right away. With this option, any pending modifications will be asynchronously applied as soon as possible, regardless of the maintenance window setting for this RDS database instance. Note that any changes available in the pending modifications queue are also applied. If any of the pending modifications require downtime, choosing this option can cause unexpected downtime for the application.\n7. Repeat steps 3 to 6 for each RDS instance available in the current region.\n8. Change the AWS region from the navigation bar to repeat the process for other regions.\n\nFrom Command Line:\n1. Run describe-db-instances command to list all RDS database names identifiers, available in the selected AWS region: aws rds describe-db-instances --region <region-name> --query 'DBInstances[*].DBInstanceIdentifier'\n2. The command output should return each database instance identifier.\n3. Run modify-db-instance command to modify the selected RDS instance configuration. Then use the following command to disable the Publicly Accessible flag for the selected RDS instances. This command use the apply-immediately flag. If you want to avoid any downtime --no-apply-immediately flag can be used: aws rds modify-db-instance --region <region-name> --db-instance-identifier <db-name> --no-publicly-accessible --apply-immediately\n4. The command output should reveal the PubliclyAccessible configuration under pending values and should get applied at the specified time.\n5. Updating the Internet Gateway Destination via AWS CLI is not currently supported To update information about Internet Gateway use the AWS Console Procedure.\n6. Repeat steps 1 to 5 for each RDS instance provisioned in the current region.\n7. Change the AWS region by using the --region filter to repeat the process for other regions.",
+      "references": [
+          "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.html",
+          "https://docs.aws.amazon.com/vpc/latest/userguide/VPC_Scenario2.html",
+          "https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_VPC.WorkingWithRDSInstanceinaVPC.html",
+          "https://aws.amazon.com/rds/faqs/"
+      ],
+      "cis_controls_v8": [
+          {
+              "control_id": "3.3",
+              "control_name": "Configure Data Access Control Lists",
+              "control_description": "Configure data access control lists based on a user's need to know. Apply data access control lists, also known as access permissions, to local and remote file systems, databases, and applications.",
+              "asset_type": "Data",
+              "security_function": "Protect",
+              "implementation_groups": [
+                  1,
+                  2,
+                  3
+              ],
+              "applicability_of_service_model": {
+                  "IaaS": true,
+                  "PaaS": true,
+                  "SaaS": true,
+                  "FaaS": true
+              }
+          }
+      ]
+    },
+    {
       "id": "3.3",
       "title": "Ensure the S3 bucket used to store CloudTrail logs is not publicly accessible",
       "description": "CloudTrail logs a record of every API call made in your AWS account. These logs file are stored in an S3 bucket. It is recommended that the bucket policy or access control list (ACL) applied to the S3 bucket that CloudTrail logs to prevent public access to the CloudTrail logs.",
@@ -1168,6 +1204,42 @@
         }
       ],
       "additional_information": "Setting the filter to \"Reject\" will dramatically reduce the logging data accumulation for this recommendation and provide sufficient information for the purposes of breach detection, research and remediation. However, during periods of least privilege security group engineering, setting this the filter to \"All\" can be very helpful in discovering existing traffic flows required for proper operation of an already running environment."
+    },
+    {
+      "id": "5.4",
+      "title": "Ensure the default security group of every VPC restricts all traffic",
+      "description": "A VPC comes with a default security group whose initial settings deny all inbound traffic, allow all outbound traffic, and allow all traffic between instances assigned to the security group. If you don't specify a security group when you launch an instance, the instance is automatically assigned to this default security group. Security groups provide stateful filtering of ingress/egress network traffic to AWS resources. It is recommended that the default security group restrict all traffic.",
+      "rationale": "Configuring all VPC default security groups to restrict all traffic will encourage least privilege security group development and mindful placement of AWS resources into security groups which will in-turn reduce the exposure of those resources.",
+      "remediation_type": "Automated",
+      "profile_applicability": "Level 2",
+      "audit_procedure": "Perform the following to determine if the account is configured as prescribed:\n\nSecurity Group State\n1. Login to the AWS Management Console at https://console.aws.amazon.com/vpc/home\n2. Repeat the next steps for all VPCs - including the default VPC in each AWS region:\n3. In the left pane, click Security Groups\n4. For each default security group, perform the following:\n5. Select the default security group\n6. Click the Inbound Rules tab\n7. Ensure no rule exist\n8. Click the Outbound Rules tab\n9. Ensure no rules exist\n\nSecurity Group Members\n1. Login to the AWS Management Console at https://console.aws.amazon.com/vpc/home\n2. Repeat the next steps for all default groups in all VPCs - including the default VPC in each AWS region:\n3. In the left pane, click Security Groups\n4. Copy the id of the default security group.\n5. Change to the EC2 Management Console at https://console.aws.amazon.com/ec2/v2/home\n6. In the filter column type 'Security Group ID : < security group id from #4 >'",
+      "remediation_procedure": "Perform the following to implement the prescribed state:\n\nSecurity Group Members\n1. Identify AWS resources that exist within the default security group\n2. Create a set of least privilege security groups for those resources\n3. Place the resources in those security groups\n4. Remove the resources noted in #1 from the default security group\n\nSecurity Group State\n1. Login to the AWS Management Console at https://console.aws.amazon.com/vpc/home\n2. Repeat the next steps for all VPCs - including the default VPC in each AWS region:\n3. In the left pane, click Security Groups\n4. For each default security group, perform the following:\n5. Select the default security group\n6. Click the Inbound Rules tab\n7. Remove any inbound rules\n8. Click the Outbound Rules tab\n9. Remove any Outbound rules\n\nRecommended: IAM groups allow you to edit the \"name\" field. After remediating default groups rules for all VPCs in all regions, edit this field to add text similar to \"DO NOT USE. DO NOT ADD RULES\"",
+      "impact": "Implementing this recommendation in an existing VPC containing operating resources requires extremely careful migration planning as the default security groups are likely to be enabling many ports that are unknown. Enabling VPC flow logging (of accepts) in an existing environment that is known to be breach free will reveal the current pattern of ports being used for each instance to communicate successfully.",
+      "references": [
+          "CCE-79201-0",
+          "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html",
+          "https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security-groups.html#default-security-group"
+      ],
+      "cis_controls_v8": [
+          {
+              "control_id": "3.3",
+              "control_name": "Configure Data Access Control Lists",
+              "control_description": "Configure data access control lists based on a user's need to know. Apply data access control lists, also known as access permissions, to local and remote file systems, databases, and applications.",
+              "asset_type": "Data",
+              "security_function": "Protect",
+              "implementation_groups": [
+                  1,
+                  2,
+                  3
+              ],
+              "applicability_of_service_model": {
+                  "IaaS": true,
+                  "PaaS": true,
+                  "SaaS": true,
+                  "FaaS": true
+              }
+          }
+      ]
     }    
   ]
 }

@@ -363,3 +363,95 @@ class TestGetBucketPolicy:
         assert result['success'] is False
         assert result['error_code'] == 'NoSuchBucketPolicy'
         assert result['operation'] == 'get_bucket_policy for bucket test-bucket'
+
+class TestGetBucketLogging:
+    """Tests for get_bucket_logging method."""
+    
+    def test_success(self, s3_service, mock_client):
+        """Test successful retrieval of bucket logging settings."""
+        mock_response = {
+            'LoggingEnabled': {
+                'TargetBucket': 'log-bucket',
+                'TargetPrefix': 'logs/'
+            }
+        }
+        mock_client.get_bucket_logging.return_value = mock_response
+        
+        result = s3_service.get_bucket_logging('test-bucket')
+        
+        mock_client.get_bucket_logging.assert_called_once_with(Bucket='test-bucket')
+        assert result['success'] is True
+        assert result['LoggingEnabled']['TargetBucket'] == 'log-bucket'
+        assert result['LoggingEnabled']['TargetPrefix'] == 'logs/'
+    
+    def test_no_logging_enabled(self, s3_service, mock_client):
+        """Test when logging is not enabled for a bucket."""
+        mock_client.get_bucket_logging.return_value = {}
+        
+        result = s3_service.get_bucket_logging('test-bucket')
+        
+        assert result['success'] is True
+        assert result['LoggingEnabled'] == {}
+    
+    def test_error(self, s3_service, mock_client):
+        """Test error handling in get_bucket_logging."""
+        error_response = {
+            'Error': {
+                'Code': 'NoSuchBucket',
+                'Message': 'The specified bucket does not exist'
+            },
+            'ResponseMetadata': {
+                'RequestId': '1234567890',
+                'HTTPStatusCode': 404
+            }
+        }
+        mock_client.get_bucket_logging.side_effect = ClientError(
+            error_response, 'GetBucketLogging'
+        )
+        
+        result = s3_service.get_bucket_logging('test-bucket')
+        
+        assert result['success'] is False
+        assert result['error_code'] == 'NoSuchBucket'
+        assert result['operation'] == 'get_bucket_logging for bucket test-bucket'
+
+class TestPutBucketLogging:
+    """Tests for put_bucket_logging method."""
+    
+    def test_success(self, s3_service, mock_client):
+        """Test successful enabling of bucket logging."""
+        logging_config = {
+            'TargetBucket': 'log-bucket',
+            'TargetPrefix': 'logs/'
+        }
+        
+        result = s3_service.put_bucket_logging('test-bucket', logging_config)
+        
+        mock_client.put_bucket_logging.assert_called_once_with(
+            Bucket='test-bucket',
+            BucketLoggingStatus={'LoggingEnabled': logging_config}
+        )
+        assert result['success'] is True
+        assert result['message'] == 'Logging enabled successfully for bucket test-bucket'
+    
+    def test_error(self, s3_service, mock_client):
+        """Test error handling in put_bucket_logging."""
+        error_response = {
+            'Error': {
+                'Code': 'InvalidTargetBucketForLogging',
+                'Message': 'Target bucket for logging does not exist'
+            },
+            'ResponseMetadata': {
+                'RequestId': '1234567890',
+                'HTTPStatusCode': 400
+            }
+        }
+        mock_client.put_bucket_logging.side_effect = ClientError(
+            error_response, 'PutBucketLogging'
+        )
+        
+        result = s3_service.put_bucket_logging('test-bucket', {'TargetBucket': 'nonexistent-bucket'})
+        
+        assert result['success'] is False
+        assert result['error_code'] == 'InvalidTargetBucketForLogging'
+        assert result['operation'] == 'put_bucket_logging for bucket test-bucket'

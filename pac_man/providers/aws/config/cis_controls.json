@@ -72,6 +72,26 @@
             "id": "cis_3_3",
             "check": "cis_3_3_check",
             "fix": "cis_3_3_fix"
+        },
+        {
+            "id": "cis_3_6",
+            "check": "cis_3_6_check",
+            "fix": "cis_3_6_fix"
+        },
+        {
+            "id": "cis_3_9",
+            "check": "cis_3_9_check",
+            "fix": "cis_3_9_fix"
+        },
+        {
+            "id": "cis_2_3_3",
+            "check": "cis_2_3_3_check",
+            "fix": "cis_2_3_3_fix"
+        },
+        {
+            "id": "cis_5_4",
+            "check": "cis_5_4_check",
+            "fix": "cis_5_4_fix"
         }
     ]
 }
